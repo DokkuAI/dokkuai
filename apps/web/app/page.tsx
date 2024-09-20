@@ -1,3 +1,8 @@
+import {User} from '@repo/types'
+
 export default function Home() {
-  return <h1>Hello Turborepo</h1>;
+  const obj:User = {firstName:"A", lastName:"K"};
+    return (
+    <div>{obj.firstName}</div>
+  );
 }

@@ -1,0 +1,20 @@
+{
+  "name": "@repo/math",
+  "type": "module",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "npm run build -- --watch"
+  },
+"main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+
+  "devDependencies": {
+    "@repo/typescript-config": "*",
+    "tsup": "^8.3.0",
+    "typescript": "latest"
+  }
+}
+
+
+  
