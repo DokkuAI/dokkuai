@@ -7,7 +7,14 @@ import NotesModule from './notes/notes.module';
 import { WorkspaceModule } from './workspace/workspace.module';
 
 @Module({
-  imports: [ MongooseModule.forRootAsync({useFactory:()=>({uri: "mongodb://localhost:27017/dokkuai"})}), UserModule, NotesModule, WorkspaceModule],
+  imports: [
+    MongooseModule.forRootAsync({
+      useFactory: () => ({ uri: 'mongodb://localhost:27017/dokkuai' }),
+    }),
+    UserModule,
+    NotesModule,
+    WorkspaceModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
