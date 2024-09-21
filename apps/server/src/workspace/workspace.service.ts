@@ -5,7 +5,7 @@ import WorkspaceRepository from './repository/workspace.repository';
 import Workspace from './schema/workspace.schema';
 
 @Injectable()
-export class WorkspaceService {
+export default class WorkspaceService {
   constructor(private readonly repository: WorkspaceRepository) {}
 
   async create(createWorkspaceDto: CreateWorkspaceDto): Promise<Workspace> {

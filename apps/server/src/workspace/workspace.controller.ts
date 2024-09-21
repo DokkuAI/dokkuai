@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { WorkspaceService } from './workspace.service';
+import WorkspaceService from './workspace.service';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 import Workspace from './schema/workspace.schema';
 
 @Controller('workspace')
-export class WorkspaceController {
+export default class WorkspaceController {
   constructor(private readonly workspaceService: WorkspaceService) {}
 
   @Post()
