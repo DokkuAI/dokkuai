@@ -5,7 +5,7 @@ import User from './schema/user.schema';
 import UserRepository from './repository/user.repository';
 
 @Injectable()
-export class UserService {
+export default class UserService {
   private readonly repository: UserRepository;
   constructor(repository: UserRepository) {
     this.repository = repository;
