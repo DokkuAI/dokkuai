@@ -11,7 +11,7 @@ export interface INote {
 }
 
 @Schema({timestamps: true})
-export default class Notes implements INote {
+export default class Note implements INote {
   @Prop({ required: true })
   name: string;
 
@@ -34,4 +34,4 @@ export default class Notes implements INote {
   size?: string;
 }
 
-export const NotesSchema = SchemaFactory.createForClass(Notes);
+export const NoteSchema = SchemaFactory.createForClass(Note);

@@ -11,7 +11,7 @@ export class CreateNoteDto implements INote {
 
   @IsString()
   @IsOptional()
-  page: string;
+  page?: string;
 
   @IsArray()
   @IsString({ each: true })

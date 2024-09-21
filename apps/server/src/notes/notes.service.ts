@@ -2,12 +2,12 @@ import { Injectable } from '@nestjs/common';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import NotesRepository from './repository/notes.repository';
-import Notes from './schema/notes.schema';
+import Note from './schema/notes.schema';
 
 @Injectable()
-export default class NotesService {
+export default class NoteService {
   constructor(private readonly repository: NotesRepository) {}
-  create(createNoteDto: CreateNoteDto): Promise<Notes> {
+  create(createNoteDto: CreateNoteDto): Promise<Note> {
     return this.repository.create(createNoteDto);
   }
 
@@ -15,11 +15,11 @@ export default class NotesService {
     return `This action returns all notes`;
   }
 
-  find(id: string): Promise<Notes> {
+  find(id: string): Promise<Note> {
     return this.repository.findById(id);
   }
 
-  update(id: string, updateNoteDto: UpdateNoteDto): Promise<Notes> {
+  update(id: string, updateNoteDto: UpdateNoteDto): Promise<Note> {
     return this.repository.findByIdAndUpdate(id, updateNoteDto);
   }
 
