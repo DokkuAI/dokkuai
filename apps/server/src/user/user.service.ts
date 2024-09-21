@@ -23,11 +23,11 @@ export class UserService {
     return this.repository.findById(id);
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     return this.repository.findByIdAndUpdate(id, updateUserDto);
   }
 
-  async remove(id: string) {
+  async remove(id: string): Promise<null> {
     return this.repository.findByIdAndDelete(id);
   }
 }
