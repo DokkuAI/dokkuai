@@ -22,7 +22,7 @@ export default class UserRepository {
   }
 
   async findByIdAndUpdate(id: string, user: UpdateUserDto): Promise<User> {
-    const doc = await this.model.findByIdAndUpdate(id, user);
+    const doc = await this.model.findByIdAndUpdate(id, user, {new: true});
     return doc;
   }
 
