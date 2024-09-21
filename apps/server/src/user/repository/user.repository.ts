@@ -11,7 +11,7 @@ export default class UserRepository {
     private readonly model: Model<User>,
   ) {}
 
-  async create(user: IUser): Promise<IUser> {
+  async create(user: IUser): Promise<User> {
     const doc = await this.model.create(user);
     return doc;
   }
@@ -22,7 +22,7 @@ export default class UserRepository {
   }
 
   async findByIdAndUpdate(id: string, user: UpdateUserDto): Promise<User> {
-    const doc = await this.model.findByIdAndUpdate(id, user, {new: true});
+    const doc = await this.model.findByIdAndUpdate(id, user);
     return doc;
   }
 
