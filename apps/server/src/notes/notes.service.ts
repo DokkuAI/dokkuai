@@ -8,7 +8,6 @@ import Notes from './schema/notes.schema';
 export default class NotesService {
   constructor(private readonly repository: NotesRepository) {}
   create(createNoteDto: CreateNoteDto): Promise<Notes> {
-    createNoteDto.date = '11-11-1111';
     return this.repository.create(createNoteDto);
   }
 

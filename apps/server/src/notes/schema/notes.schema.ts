@@ -2,11 +2,11 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 
 export interface INote {
   name: string;
-  link?: string;
+  linkTo?: string;
   page?: string;
-  tags: string[];
+  tags?: string[];
   createdBy: string;
-  url?: string;
+  contentUrl: string;
   size?: string;
 }
 
@@ -15,23 +15,20 @@ export default class Notes implements INote {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
-  date: string;
-
   @Prop()
-  link?: string;
+  linkTo?: string;
 
   @Prop()
   page?: string;
 
-  @Prop({ required: true, type: [String] })
-  tags: string[];
+  @Prop({ type: [String] })
+  tags?: string[];
 
   @Prop({ required: true })
   createdBy: string;
 
   @Prop()
-  url?: string;
+  contentUrl: string;
 
   @Prop()
   size?: string;

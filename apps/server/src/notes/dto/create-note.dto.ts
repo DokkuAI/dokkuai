@@ -7,11 +7,7 @@ export class CreateNoteDto implements INote {
 
   @IsString()
   @IsOptional()
-  date: string;
-
-  @IsString()
-  @IsOptional()
-  link?: string;
+  linkTo?: string;
 
   @IsString()
   @IsOptional()
@@ -19,14 +15,15 @@ export class CreateNoteDto implements INote {
 
   @IsArray()
   @IsString({ each: true })
-  tags: string[];
+  @IsOptional()
+  tags?: string[];
 
   @IsString()
   createdBy: string;
 
   @IsString()
   @IsOptional()
-  url?: string;
+  contentUrl: string;
 
   @IsString()
   @IsOptional()
