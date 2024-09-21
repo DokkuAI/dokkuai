@@ -19,7 +19,7 @@ export default class Workspace implements IWorkspace {
   @Prop({ required: true, type: String, enum: WorkspaceType })
   type: WorkspaceType;
 
-  @Prop({ required: true, type: [String] })
+  @Prop({required: true, type: [String] })
   invites: string[];
 }
 
