@@ -3,7 +3,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import User from './schema/user.schema';
 import UserRepository from './repository/user.repository';
-import { ObjectId } from 'mongoose';
 
 @Injectable()
 export class UserService {
@@ -24,11 +23,11 @@ export class UserService {
     return this.repository.findById(id);
   }
 
-  async update(id: ObjectId, updateUserDto: UpdateUserDto) {
-    return this.repository.update(id, updateUserDto);
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    return this.repository.findByIdAndUpdate(id, updateUserDto);
   }
 
-  async remove(id: ObjectId) {
-    return this.repository.remove(id);
+  async remove(id: string) {
+    return this.repository.findByIdAndDelete(id);
   }
 }

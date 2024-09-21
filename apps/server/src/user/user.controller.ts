@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { ObjectId } from 'mongoose';
 
 @Controller('user')
 export class UserController {
@@ -24,12 +23,12 @@ export class UserController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: ObjectId, @Body() updateUserDto: UpdateUserDto) {
+  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: ObjectId) {
+  remove(@Param('id') id: string) {
     return this.userService.remove(id);
   }
 }
