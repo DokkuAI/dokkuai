@@ -11,8 +11,8 @@ export default class LibraryRepository {
     private readonly model: Model<Library>,
   ) {}
 
-  async create(file: IFile): Promise<Library> {
-    const doc = await this.model.create(file);
+  async create(library: Library): Promise<Library> {
+    const doc = await this.model.create(library);
     return doc;
   }
 
@@ -21,8 +21,8 @@ export default class LibraryRepository {
     return doc;
   }
 
-  async findByIdAndUpdate(id: string, user: UpdateLibraryDto): Promise<Library> {
-    const doc = await this.model.findByIdAndUpdate(id, user, {new: true});
+  async findByIdAndUpdate(id: string, updateLibraryDto: UpdateLibraryDto): Promise<Library> {
+    const doc = await this.model.findByIdAndUpdate(id, updateLibraryDto, {new: true});
     return doc;
   }
 

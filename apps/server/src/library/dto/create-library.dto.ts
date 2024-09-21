@@ -1,4 +1,4 @@
-import { IsArray, IsEnum, IsString } from "class-validator";
+import { IsArray, IsEnum, IsOptional, IsString } from "class-validator";
 import { FileType, IFile } from "../schema/library.schema";
 
 export class CreateLibraryDto implements IFile {
@@ -18,4 +18,8 @@ export class CreateLibraryDto implements IFile {
     @IsArray()
     @IsString({each: true})
     tags: string[];
+
+    @IsString()
+    @IsOptional()
+    abstract?: string;
 }

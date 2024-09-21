@@ -12,6 +12,7 @@ export interface IFile {
   year: string;
   author: string;
   tags: string[];
+  abstract?: string;
 }
 
 @Schema({timestamps: true})
@@ -31,6 +32,8 @@ export default class Library implements IFile {
   @Prop({ required: true, type: [String] })
   tags: string[];
 
+  @Prop()
+  abstract?: string;
 }
 
 export const LibrarySchema = SchemaFactory.createForClass(Library);

@@ -1,11 +1,11 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
-import { LibraryService } from './library.service';
+import LibraryService from './library.service';
 import { CreateLibraryDto } from './dto/create-library.dto';
 import { UpdateLibraryDto } from './dto/update-library.dto';
 import Library from './schema/library.schema';
 
 @Controller('library')
-export class LibraryController {
+export default class LibraryController {
   constructor(private readonly libraryService: LibraryService) {}
 
   @Post()

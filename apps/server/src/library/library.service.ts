@@ -5,7 +5,7 @@ import LibraryRepository from './repository/library.repository';
 import Library from './schema/library.schema';
 
 @Injectable()
-export class LibraryService {
+export default class LibraryService {
   constructor(private readonly repository: LibraryRepository) {}
   create(createLibraryDto: CreateLibraryDto): Promise<Library> {
     return this.repository.create(createLibraryDto);
