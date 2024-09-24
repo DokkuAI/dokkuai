@@ -1,4 +1,5 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Interface } from 'readline';
 
 export interface INote {
   name: string;
@@ -6,11 +7,15 @@ export interface INote {
   page?: string;
   tags?: string[];
   createdBy: string;
-  contentUrl: string;
   size?: string;
+  path: string;
 }
 
-@Schema({timestamps: true})
+export interface INoteContent extends INote {
+  content: string;
+}
+
+@Schema({ timestamps: true })
 export default class Note implements INote {
   @Prop({ required: true })
   name: string;
@@ -28,10 +33,10 @@ export default class Note implements INote {
   createdBy: string;
 
   @Prop()
-  contentUrl: string;
-
-  @Prop()
   size?: string;
+
+  @Prop({ required: true })
+  path: string;
 }
 
 export const NoteSchema = SchemaFactory.createForClass(Note);

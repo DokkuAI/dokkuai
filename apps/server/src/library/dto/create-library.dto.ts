@@ -1,23 +1,30 @@
-import { IsArray, IsEnum, IsOptional, IsString } from "class-validator";
+import { IsArray, IsEnum, IsMimeType, IsOptional, IsString } from "class-validator";
 import { FileType, IFile } from "../schema/library.schema";
 
 export class CreateLibraryDto implements IFile {
 
-    @IsEnum(FileType)
-    type: FileType;
+    // @IsEnum(FileType)
+    @IsMimeType()
+    type: string;
 
     @IsString()
-    title: string;
+    name: string;
 
     @IsString()
-    year: string;
+    path: string;
 
+    @IsOptional()
     @IsString()
-    author: string;
+    year?: string;
+
+    @IsOptional()
+    @IsString()
+    author?: string;
 
     @IsArray()
     @IsString({each: true})
-    tags: string[];
+    @IsOptional()
+    tags?: string[];
 
     @IsString()
     @IsOptional()

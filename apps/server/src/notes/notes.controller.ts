@@ -6,11 +6,19 @@ import {
   Patch,
   Param,
   Delete,
+  FileTypeValidator,
+  HttpCode,
+  HttpStatus,
+  MaxFileSizeValidator,
+  ParseFilePipe,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import NoteService from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import Note from './schema/notes.schema';
+import { FileInterceptor } from '@nestjs/platform-express';
 @Controller('notes')
 export default class NotesController {
   constructor(private readonly notesService: NoteService) {}
@@ -34,7 +42,7 @@ export default class NotesController {
   update(
     @Param('id') id: string,
     @Body() updateNoteDto: UpdateNoteDto,
-  ): Promise<Note> {
+  ): Promise<Note | void> {
     return this.notesService.update(id, updateNoteDto);
   }
 

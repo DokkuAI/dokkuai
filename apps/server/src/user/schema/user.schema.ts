@@ -31,30 +31,30 @@ export interface IUser {
   firstName: string;
   lastName: string;
   email: string;
-  about: {
-    work: WorkType;
-    designation: DesignationType;
-    size: Size;
-    description: string;
+  about?: {
+    work?: WorkType;
+    designation?: DesignationType;
+    size?: Size;
+    description?: string;
   };
 }
 
-@Schema({_id: false})
+@Schema({ _id: false })
 class AboutUser {
-  @Prop({ required: true, type: String, enum:WorkType })
-  work: WorkType;
+  @Prop({type: String, enum: WorkType })
+  work?: WorkType;
 
-  @Prop({ required: true, type: String, enum: DesignationType })
-  designation: DesignationType;
+  @Prop({ type: String, enum: DesignationType })
+  designation?: DesignationType;
 
-  @Prop({ required: true, type: String, enum: Size })
-  size: Size;
+  @Prop({ type: String, enum: Size })
+  size?: Size;
 
   @Prop({ required: true })
-  description: string;
+  description?: string;
 }
 
-@Schema({timestamps: true})
+@Schema({ timestamps: true })
 export default class User implements IUser {
   @Prop({ required: true })
   firstName: string;
@@ -65,8 +65,8 @@ export default class User implements IUser {
   @Prop({ required: true })
   email: string;
 
-  @Prop({ required: true, type: AboutUser })
-  about: AboutUser;
+  @Prop({ type: AboutUser })
+  about?: AboutUser;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

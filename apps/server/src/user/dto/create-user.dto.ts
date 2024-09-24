@@ -3,17 +3,22 @@ import { DesignationType, IUser, Size, WorkType } from '../schema/user.schema';
 import { Type } from 'class-transformer';
 
 class AboutUserDto {
+  
   @IsEnum(WorkType)
-  work: WorkType;
+  @IsOptional()
+  work?: WorkType;
 
   @IsEnum(DesignationType)
-  designation: DesignationType;
+  @IsOptional()
+  designation?: DesignationType;
 
   @IsEnum(Size)
-  size: Size;
+  @IsOptional()
+  size?: Size;
 
   @IsString()
-  description: string;
+  @IsOptional()
+  description?: string;
 }
 
 export class CreateUserDto implements IUser {
@@ -28,5 +33,6 @@ export class CreateUserDto implements IUser {
 
     @ValidateNested()
     @Type(() => AboutUserDto)
-    about: AboutUserDto;
+    @IsOptional()
+    about?: AboutUserDto;
 }

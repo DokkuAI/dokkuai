@@ -7,30 +7,34 @@ export enum FileType {
 }
 
 export interface IFile {
-  type: FileType;
-  title: string;
-  year: string;
-  author: string;
-  tags: string[];
+  type: string;
+  name: string;
+  year?: string;
+  author?: string;
+  tags?: string[];
   abstract?: string;
+  path: string;
 }
 
 @Schema({timestamps: true})
 export default class Library implements IFile {
-  @Prop({ required: true, enum: FileType, type: String })
-  type: FileType;
+  @Prop({required: true})
+  name: string;
 
-  @Prop({ required: true })
-  title: string;
+  @Prop({required: true})
+  path: string;
 
-  @Prop({ required: true })
-  year: string;
+  @Prop({ required: true, type: String })
+  type: string;
 
-  @Prop({ required: true })
-  author: string;
+  @Prop()
+  year?: string;
 
-  @Prop({ required: true, type: [String] })
-  tags: string[];
+  @Prop()
+  author?: string;
+
+  @Prop({ type: [String] })
+  tags?: string[];
 
   @Prop()
   abstract?: string;

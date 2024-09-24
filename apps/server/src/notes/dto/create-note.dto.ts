@@ -1,7 +1,7 @@
-import { IsArray, IsOptional, IsString } from "class-validator";
-import { INote } from "../schema/notes.schema";
+import { IsArray, IsOptional, IsString } from 'class-validator';
+import { INote, INoteContent } from '../schema/notes.schema';
 
-export class CreateNoteDto implements INote {
+export class CreateNoteDto implements INoteContent {
   @IsString()
   name: string;
 
@@ -23,9 +23,13 @@ export class CreateNoteDto implements INote {
 
   @IsString()
   @IsOptional()
-  contentUrl: string;
+  content: string;
 
   @IsString()
   @IsOptional()
   size?: string;
+
+  @IsString()
+  @IsOptional()
+  path: string;
 }
