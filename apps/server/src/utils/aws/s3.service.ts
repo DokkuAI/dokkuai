@@ -17,22 +17,29 @@ import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
 import { Injectable } from '@nestjs/common';
 import PutObjectDto from '../dto/put-object.dto';
 import { LoggerService } from '../helper/logger.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class S3Service {
   private s3Client: S3Client;
   private assetsBucketName: string;
   private awsRegion: string;
-  constructor(private readonly logger: LoggerService) {
-    this.assetsBucketName = process.env.AWS_S3_BUCKET_NAME ;
+  constructor(
+    private readonly logger: LoggerService,
+    private readonly configService: ConfigService,
+  ) {
+    this.assetsBucketName = this.configService.getOrThrow<string>(
+      'aws.s3.assetsBucketName',
+    );
 
-    this.awsRegion = process.env.AWS_REGION;
+    this.awsRegion = this.configService.getOrThrow<string>('aws.region');
 
     this.s3Client = new S3Client({
       credentials: {
-        accessKeyId: process.env.AWS_ACCESS_KEY ,
-        secretAccessKey:
-          process.env.AWS_SECRET_KEY ,
+        accessKeyId: this.configService.getOrThrow<string>('aws.accessKeyId'),
+        secretAccessKey: this.configService.getOrThrow<string>(
+          'aws.secretAccessKey',
+        ),
       },
       region: this.awsRegion,
     });
@@ -57,7 +64,7 @@ export class S3Service {
 
       const pathToUpload = filePath;
       const input: PutObjectCommandInput = {
-        Body: file, 
+        Body: file,
         Bucket: this.assetsBucketName,
         Key: `${pathToUpload}/${fileName}`,
         ContentType: fileContentType,
@@ -143,42 +150,6 @@ export class S3Service {
     }
   }
 
-  async moveObject({
-    sourceBucket,
-    destinationBucket,
-    key,
-  }: {
-    sourceBucket: string;
-    destinationBucket: string;
-    key: string;
-  }) {
-    try {
-      const copyResponse = await this.copyObject({
-        sourceBucket,
-        destinationBucket,
-        key,
-      });
-
-      const deleteResponse = await this.deleteObject({
-        destinationBucket,
-        key,
-      });
-
-      return {
-        copyResponse,
-        deleteResponse,
-      };
-    } catch (error) {
-      this.logger.error(
-        'Error moving object',
-        'S3Service.moveObject',
-        { sourceBucket, destinationBucket, key },
-        error,
-      );
-      throw error;
-    }
-  }
-
   async copyObject({
     sourceBucket,
     destinationBucket,
@@ -217,15 +188,13 @@ export class S3Service {
   }
 
   async deleteObject({
-    destinationBucket,
     key,
   }: {
-    destinationBucket: string;
     key: string;
   }): Promise<DeleteObjectCommandOutput> {
     try {
       const input: DeleteObjectCommandInput = {
-        Bucket: destinationBucket,
+        Bucket: this.assetsBucketName,
         Key: key,
       };
 
@@ -234,7 +203,7 @@ export class S3Service {
         await this.s3Client.send(command);
 
       this.logger.log('Successfully deleted file', 'S3Service.moveObject', {
-        destinationBucket,
+        assetsBucketName: this.assetsBucketName,
         key,
         response: response,
       });
@@ -243,7 +212,7 @@ export class S3Service {
       this.logger.error(
         'Error deleting object',
         'S3Service.deleteObject',
-        { destinationBucket, key },
+        { key },
         error,
       );
       throw error;

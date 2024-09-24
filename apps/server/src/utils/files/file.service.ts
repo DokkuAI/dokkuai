@@ -27,7 +27,7 @@ export default class FileService {
   ): Promise<PutObjectDto> {
     try {
       const { name, type, content } = noteData;
-      console.log({path});
+      console.log({ path });
       return await this.s3Service.putObject({
         file: content,
         fileName: name,
@@ -40,9 +40,18 @@ export default class FileService {
     }
   }
 
-  async delete(key: string, destinationBucket: string) {
+  async getFile(key: string) {
     try {
-      return await this.s3Service.deleteObject({ key, destinationBucket });
+      return await this.s3Service.getObject(key);
+    } catch (error) {
+      console.error('Fetching file - FAILED');
+      throw error;
+    }
+  }
+
+  async delete(key: string) {
+    try {
+      return await this.s3Service.deleteObject({ key });
     } catch (error) {
       console.error('Deleting file - FAILED');
       throw error;

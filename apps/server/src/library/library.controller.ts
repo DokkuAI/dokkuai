@@ -1,4 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, FileTypeValidator, MaxFileSizeValidator, ParseFilePipe, UploadedFile, UseInterceptors, HttpCode, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  FileTypeValidator,
+  MaxFileSizeValidator,
+  ParseFilePipe,
+  UploadedFile,
+  UseInterceptors,
+  HttpCode,
+  HttpStatus,
+} from '@nestjs/common';
 import LibraryService from './library.service';
 import { CreateLibraryDto } from './dto/create-library.dto';
 import { UpdateLibraryDto } from './dto/update-library.dto';
@@ -44,7 +59,7 @@ export default class LibraryController {
 
   @Get(':id')
   findOne(@Param('id') id: string): Promise<Library> {
-    return this.libraryService.findOne(id);
+    return this.libraryService.find(id);
   }
 
   @Patch(':id')
@@ -55,13 +70,8 @@ export default class LibraryController {
     return this.libraryService.update(id, updateLibraryDto);
   }
 
-  @Delete('/delete')
-  async deleteFile(@Body() body: { key: string , id: string}) {
-    return await this.libraryService.delete(body);
-  }
-
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<null> {
+  async remove(@Param('id') id: string): Promise<void> {
     return this.libraryService.remove(id);
   }
 }

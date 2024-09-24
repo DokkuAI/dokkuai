@@ -8,17 +8,28 @@ import NotesModule from './notes/notes.module';
 import WorkspaceModule from './workspace/workspace.module';
 import AuthModule from './auth/auth.module';
 import UtilsModule from './utils/utils.module';
- @Module({
+import { configuration } from './config/configuration';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+@Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: `${process.cwd()}/src/config/env/.env.${process.env.NODE_ENV}`,
+      load: [configuration],
+    }),
     MongooseModule.forRootAsync({
-      useFactory: () => ({ uri: 'mongodb://localhost:27017/dokkuai' }),
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.getOrThrow<string>('mongoUri'),
+      }),
+      inject: [ConfigService],
     }),
     UserModule,
     NotesModule,
     WorkspaceModule,
     LibraryModule,
     AuthModule,
-    UtilsModule
+    UtilsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

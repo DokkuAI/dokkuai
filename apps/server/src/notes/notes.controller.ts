@@ -6,19 +6,15 @@ import {
   Patch,
   Param,
   Delete,
-  FileTypeValidator,
   HttpCode,
   HttpStatus,
-  MaxFileSizeValidator,
-  ParseFilePipe,
-  UploadedFile,
-  UseInterceptors,
+  Put,
 } from '@nestjs/common';
 import NoteService from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import Note from './schema/notes.schema';
-import { FileInterceptor } from '@nestjs/platform-express';
+import SaveNoteDto from './dto/save-note.dto';
 @Controller('notes')
 export default class NotesController {
   constructor(private readonly notesService: NoteService) {}
@@ -26,6 +22,15 @@ export default class NotesController {
   @Post()
   create(@Body() createNoteDto: CreateNoteDto): Promise<Note> {
     return this.notesService.create(createNoteDto);
+  }
+
+  // @HttpCode(HttpStatus.ACCEPTED)
+  @Put(':id')
+  saveNote(
+    @Param('id') id: string,
+    @Body() saveNoteDto: SaveNoteDto,
+  ): Promise<string> {
+    return this.notesService.saveNote(saveNoteDto, id);
   }
 
   @Get()
@@ -47,7 +52,7 @@ export default class NotesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<null> {
+  remove(@Param('id') id: string): Promise<void> {
     return this.notesService.remove(id);
   }
 }

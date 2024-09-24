@@ -1,8 +1,8 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import Notes from "../schema/notes.schema";
-import { Model } from "mongoose";
-import { UpdateNoteDto } from "../dto/update-note.dto";
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import Notes from '../schema/notes.schema';
+import { Model } from 'mongoose';
+import { UpdateNoteDto } from '../dto/update-note.dto';
 
 @Injectable()
 export default class NotesRepository {
@@ -17,12 +17,12 @@ export default class NotesRepository {
   }
 
   async findById(id: string): Promise<Notes> {
-    const doc = await this.model.findById(id);
+    const doc = await this.model.findById(id).lean();
     return doc;
   }
 
   async findByIdAndUpdate(id: string, note: UpdateNoteDto): Promise<Notes> {
-    const doc = await this.model.findByIdAndUpdate(id, note, {new: true});
+    const doc = await this.model.findByIdAndUpdate(id, note, { new: true });
     return doc;
   }
 
