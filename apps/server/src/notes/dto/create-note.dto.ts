@@ -22,7 +22,6 @@ export class CreateNoteDto implements INoteContent {
   createdBy: string;
 
   @IsString()
-  @IsOptional()
   content: string;
 
   @IsString()

@@ -19,7 +19,6 @@ import { CreateLibraryDto } from './dto/create-library.dto';
 import { UpdateLibraryDto } from './dto/update-library.dto';
 import Library from './schema/library.schema';
 import { FileInterceptor } from '@nestjs/platform-express';
-import FileService from 'src/utils/files/file.service';
 
 @Controller('library')
 export default class LibraryController {
@@ -45,7 +44,7 @@ export default class LibraryController {
             fileType: 'application/pdf',
           }),
         ],
-      }),
+      }),                                           
     )
     file: Express.Multer.File,
   ) {

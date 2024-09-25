@@ -39,7 +39,7 @@ export default class NoteService {
   }
 
   async saveNote(saveNoteDto: SaveNoteDto, id: string): Promise<string> {
-    const doc = await this.find(id);
+    const doc = await this.repository.findById(id);
     const noteData = {
       name: doc.name,
       content: saveNoteDto.content,

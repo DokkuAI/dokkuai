@@ -27,7 +27,6 @@ export default class FileService {
   ): Promise<PutObjectDto> {
     try {
       const { name, type, content } = noteData;
-      console.log({ path });
       return await this.s3Service.putObject({
         file: content,
         fileName: name,
