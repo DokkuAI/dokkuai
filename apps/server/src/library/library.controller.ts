@@ -57,7 +57,7 @@ export default class LibraryController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Library> {
+  findOne(@Param('id') id: string): Promise<string> {
     return this.libraryService.find(id);
   }
 

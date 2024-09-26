@@ -16,13 +16,23 @@ export default class LibraryRepository {
     return doc;
   }
 
+  async find(): Promise<Library[]> {
+    const doc = await this.model.find();
+    return doc;
+  }
+
   async findById(id: string): Promise<Library> {
     const doc = await this.model.findById(id);
     return doc;
   }
 
-  async findByIdAndUpdate(id: string, updateLibraryDto: UpdateLibraryDto): Promise<Library> {
-    const doc = await this.model.findByIdAndUpdate(id, updateLibraryDto, {new: true});
+  async findByIdAndUpdate(
+    id: string,
+    updateLibraryDto: UpdateLibraryDto,
+  ): Promise<Library> {
+    const doc = await this.model.findByIdAndUpdate(id, updateLibraryDto, {
+      new: true,
+    });
     return doc;
   }
 

@@ -17,14 +17,14 @@ export default class LibraryService {
     return this.repository.create(createLibraryDto);
   }
 
-  findAll() {
-    return `This action returns all library`;
+  async findAll(): Promise<Library[]> {
+    return await this.repository.find();
   }
 
-  find(id: string): Promise<Library> {
-    const doc = this.repository.findById(id);
+  async find(id: string): Promise<string> {
+    const doc = await this.repository.findById(id);
     if (doc) {
-      return doc;
+      return this.fileService.getCdnLink(doc.path);
     }
     throw new NotFoundException();
   }
@@ -35,7 +35,7 @@ export default class LibraryService {
 
   async remove(id: string): Promise<void> {
     // 1. Fetch doc from db
-    const fileDoc = await this.find(id);
+    const fileDoc = await this.repository.findById(id);
 
     // 2. Delete file for s3
     const key = fileDoc.path;

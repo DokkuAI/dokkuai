@@ -16,6 +16,11 @@ export default class NotesRepository {
     return doc;
   }
 
+  async find(): Promise<Notes[]> {
+    const doc = await this.model.find();
+    return doc;
+  }
+  
   async findById(id: string): Promise<Notes> {
     const doc = await this.model.findById(id).lean();
     return doc;

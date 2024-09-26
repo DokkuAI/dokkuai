@@ -24,6 +24,7 @@ export class S3Service {
   private s3Client: S3Client;
   private assetsBucketName: string;
   private awsRegion: string;
+  private awsCDN: string;
   constructor(
     private readonly logger: LoggerService,
     private readonly configService: ConfigService,
@@ -31,9 +32,9 @@ export class S3Service {
     this.assetsBucketName = this.configService.getOrThrow<string>(
       'aws.s3.assetsBucketName',
     );
-
+    
     this.awsRegion = this.configService.getOrThrow<string>('aws.region');
-
+    this.awsCDN = this.configService.getOrThrow<string>('aws.cdn');
     this.s3Client = new S3Client({
       credentials: {
         accessKeyId: this.configService.getOrThrow<string>('aws.accessKeyId'),
@@ -217,5 +218,9 @@ export class S3Service {
       );
       throw error;
     }
+  }
+
+  getCdnLink(key: string) {
+    return `${this.awsCDN}${key}`;
   }
 }

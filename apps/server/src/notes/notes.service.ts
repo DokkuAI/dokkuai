@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import NotesRepository from './repository/notes.repository';
-import Note from './schema/notes.schema';
+import Notes from './schema/notes.schema';
 import { Types } from 'mongoose';
 import FileService from 'src/utils/files/file.service';
 import SaveNoteDto from './dto/save-note.dto';
@@ -13,16 +13,16 @@ export default class NoteService {
     private readonly repository: NotesRepository,
     private readonly fileService: FileService,
   ) {}
-  async create(createNoteDto: CreateNoteDto): Promise<Note> {
+  async create(createNoteDto: CreateNoteDto): Promise<Notes> {
     const res = await this.upload({ ...createNoteDto, path: 'temp' });
     return this.repository.create({ ...createNoteDto, path: res.path });
   }
 
-  findAll() {
-    return `This action returns all notes`;
+  async findAll(): Promise<Notes[]> {
+    return await this.repository.find();
   }
 
-  async find(id: string): Promise<Note> {
+  async find(id: string): Promise<Notes> {
     // 1. fetch doc from db
     const doc = await this.repository.findById(id);
     if (doc) {
@@ -34,7 +34,7 @@ export default class NoteService {
     throw new NotFoundException();
   }
 
-  async update(id: string, updateNoteDto: UpdateNoteDto): Promise<Note> {
+  async update(id: string, updateNoteDto: UpdateNoteDto): Promise<Notes> {
     return this.repository.findByIdAndUpdate(id, updateNoteDto);
   }
 
@@ -51,7 +51,7 @@ export default class NoteService {
 
   async remove(id: string): Promise<void> {
     // 1. Fetch doc from db
-    const fileDoc = await this.find(id);
+    const fileDoc = await this.repository.findById(id);
 
     // 2. Delete file for s3
     const key = fileDoc.path;

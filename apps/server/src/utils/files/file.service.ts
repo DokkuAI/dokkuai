@@ -48,6 +48,10 @@ export default class FileService {
     }
   }
 
+  getCdnLink(key: string) {
+    return this.s3Service.getCdnLink(key);
+  }
+
   async delete(key: string) {
     try {
       return await this.s3Service.deleteObject({ key });
