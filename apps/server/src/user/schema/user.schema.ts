@@ -28,6 +28,7 @@ export enum WorkType {
 }
 
 export interface IUser {
+  externalId: string;
   firstName: string;
   lastName: string;
   email: string;
@@ -56,6 +57,10 @@ class AboutUser {
 
 @Schema({ timestamps: true })
 export default class User implements IUser {
+
+  @Prop({required: true})
+  externalId: string;
+
   @Prop({ required: true })
   firstName: string;
 

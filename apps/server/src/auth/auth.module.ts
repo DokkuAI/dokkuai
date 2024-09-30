@@ -6,6 +6,7 @@ import AuthService from "./auth.service";
 @Module({
     imports:[UserModule],
     controllers: [AuthController],
-    providers: [AuthService]
+    providers: [AuthService],
+    exports: [AuthService]
 })
 export default class AuthModule{}

@@ -21,6 +21,11 @@ export default class UserRepository {
     return doc;
   }
 
+  async findOne(query: any): Promise<User> {
+    const doc = await this.model.findOne(query);
+    return doc;
+  }
+
   async findByIdAndUpdate(id: string, user: UpdateUserDto): Promise<User> {
     const doc = await this.model.findByIdAndUpdate(id, user, {new: true});
     return doc;

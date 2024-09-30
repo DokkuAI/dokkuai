@@ -10,6 +10,8 @@ import AuthModule from './auth/auth.module';
 import UtilsModule from './utils/utils.module';
 import { configuration } from './config/configuration';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import ValidateGuard from './guard/validate.guard';
+import { APP_GUARD } from '@nestjs/core';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -30,8 +32,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     LibraryModule,
     AuthModule,
     UtilsModule,
+    
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, {provide: APP_GUARD, useClass: ValidateGuard}],
 })
 export class AppModule {}

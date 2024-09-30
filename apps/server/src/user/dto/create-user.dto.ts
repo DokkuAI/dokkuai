@@ -22,6 +22,10 @@ class AboutUserDto {
 }
 
 export class CreateUserDto implements IUser {
+
+    @IsString()
+    externalId: string;
+    
     @IsString()
     firstName: string;
 

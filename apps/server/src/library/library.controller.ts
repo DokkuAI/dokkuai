@@ -13,6 +13,8 @@ import {
   UseInterceptors,
   HttpCode,
   HttpStatus,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import LibraryService from './library.service';
 import { CreateLibraryDto } from './dto/create-library.dto';
@@ -44,7 +46,7 @@ export default class LibraryController {
             fileType: 'application/pdf',
           }),
         ],
-      }),                                           
+      }),
     )
     file: Express.Multer.File,
   ) {
@@ -52,7 +54,7 @@ export default class LibraryController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Req() req: any) {
     return this.libraryService.findAll();
   }
 

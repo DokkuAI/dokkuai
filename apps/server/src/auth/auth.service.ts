@@ -1,18 +1,23 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
+import User from 'src/user/schema/user.schema';
 import UserService from 'src/user/user.service';
 import { Webhook } from 'svix';
 
 @Injectable()
 export default class AuthService {
-  constructor(private readonly userService: UserService) {}
+
+  private webhookSecret: string;
+  constructor(
+    private readonly userService: UserService,
+    private readonly configService: ConfigService,
+  ) {
+    this.webhookSecret =
+      this.configService.getOrThrow<string>('webhookSecret');
+  }
 
   async webhook(payload: any, headers: any) {
-        // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
-    const WEBHOOK_SECRET = "whsec_U1yWE9ubhGOkKK/lSaiplbwI2yskDQfp";
-    if (!WEBHOOK_SECRET) {
-      throw new BadRequestException('You need a WEBHOOK_SECRET in your .env');
-    }
 
     // Get the Svix headers for verification
     const svix_id = headers['svix-id'];
@@ -25,7 +30,7 @@ export default class AuthService {
     }
 
     // Create a new Svix instance with your secret.
-    const wh = new Webhook(WEBHOOK_SECRET);
+    const wh = new Webhook(this.webhookSecret);
 
     let evt;
 
@@ -47,6 +52,7 @@ export default class AuthService {
     }
     const { data } = payload;
     const userPayload: CreateUserDto = {
+      externalId: data.id,
       firstName: data.first_name,
       lastName: data.last_name,
       email: data.email_addresses[0].email_address,
@@ -57,5 +63,14 @@ export default class AuthService {
       success: true,
       message: 'Webhook received',
     };
+  }
+
+  async validate(decodedJwt: any): Promise<User> {
+    const { sub } = decodedJwt;
+    const user = await this.userService.findOne({ exteralId: sub });
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    return user;
   }
 }

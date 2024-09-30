@@ -6,8 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  HttpCode,
-  HttpStatus,
   Put,
 } from '@nestjs/common';
 import NoteService from './notes.service';

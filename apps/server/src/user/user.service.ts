@@ -23,6 +23,10 @@ export default class UserService {
     return this.repository.findById(id);
   }
 
+  async findOne(query: any): Promise<User> {
+    return this.repository.findOne(query);
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     return this.repository.findByIdAndUpdate(id, updateUserDto);
   }
