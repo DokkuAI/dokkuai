@@ -3,9 +3,9 @@ import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import NotesRepository from './repository/notes.repository';
 import Notes from './schema/notes.schema';
-import { Types } from 'mongoose';
 import FileService from 'src/utils/files/file.service';
 import SaveNoteDto from './dto/save-note.dto';
+import { Types } from 'mongoose';
 
 @Injectable()
 export default class NoteService {
@@ -13,13 +13,17 @@ export default class NoteService {
     private readonly repository: NotesRepository,
     private readonly fileService: FileService,
   ) {}
-  async create(createNoteDto: CreateNoteDto): Promise<Notes> {
+  async create(createNoteDto: CreateNoteDto, userId: Types.ObjectId): Promise<Notes> {
     const res = await this.upload({ ...createNoteDto, path: 'temp' });
-    return this.repository.create({ ...createNoteDto, path: res.path });
+    return this.repository.create({
+      ...createNoteDto,
+      path: res.path,
+      userId: userId,
+    });
   }
 
-  async findAll(): Promise<Notes[]> {
-    return await this.repository.find();
+  async findAll(userId: Types.ObjectId): Promise<Notes[]> {
+    return await this.repository.find({userId: userId});
   }
 
   async find(id: string): Promise<Notes> {

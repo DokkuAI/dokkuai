@@ -3,13 +3,14 @@ import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 import WorkspaceRepository from './repository/workspace.repository';
 import Workspace from './schema/workspace.schema';
+import { Types } from 'mongoose';
 
 @Injectable()
 export default class WorkspaceService {
   constructor(private readonly repository: WorkspaceRepository) {}
 
-  async create(createWorkspaceDto: CreateWorkspaceDto): Promise<Workspace> {
-    return this.repository.create(createWorkspaceDto);
+  async create(createWorkspaceDto: CreateWorkspaceDto, userId: Types.ObjectId): Promise<Workspace> {
+    return this.repository.create({...createWorkspaceDto, userId: userId});
   }
 
   findAll() {

@@ -16,8 +16,8 @@ export default class NotesRepository {
     return doc;
   }
 
-  async find(): Promise<Notes[]> {
-    const doc = await this.model.find();
+  async find(query: any): Promise<Notes[]> {
+    const doc = await this.model.find(query);
     return doc;
   }
   

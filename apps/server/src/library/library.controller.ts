@@ -27,8 +27,8 @@ export default class LibraryController {
   constructor(private readonly libraryService: LibraryService) {}
 
   @Post()
-  create(@Body() createLibraryDto: CreateLibraryDto): Promise<Library> {
-    return this.libraryService.create(createLibraryDto);
+  create(@Body() createLibraryDto: CreateLibraryDto, @Req() request: any): Promise<Library> {
+    return this.libraryService.create(createLibraryDto, request.user._id);
   }
 
   @HttpCode(HttpStatus.ACCEPTED)
@@ -48,14 +48,15 @@ export default class LibraryController {
         ],
       }),
     )
+    @Req() request: any,
     file: Express.Multer.File,
   ) {
-    return await this.libraryService.upload(file, 'temp');
+    return await this.libraryService.upload(request.user._id, file, 'temp');
   }
 
   @Get()
-  findAll(@Req() req: any) {
-    return this.libraryService.findAll();
+  findAll(@Req() request: any) {
+    return this.libraryService.findAll(request.user._id);
   }
 
   @Get(':id')

@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   Put,
+  Req,
 } from '@nestjs/common';
 import NoteService from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
@@ -18,8 +19,8 @@ export default class NotesController {
   constructor(private readonly notesService: NoteService) {}
 
   @Post()
-  create(@Body() createNoteDto: CreateNoteDto): Promise<Note> {
-    return this.notesService.create(createNoteDto);
+  create(@Body() createNoteDto: CreateNoteDto, @Req() request: any): Promise<Note> {
+    return this.notesService.create(createNoteDto, request.user._id);
   }
 
   // @HttpCode(HttpStatus.ACCEPTED)
@@ -32,8 +33,8 @@ export default class NotesController {
   }
 
   @Get()
-  findAll() {
-    return this.notesService.findAll();
+  findAll(@Req() request: any) {
+    return this.notesService.findAll(request.user._id);
   }
 
   @Get(':id')

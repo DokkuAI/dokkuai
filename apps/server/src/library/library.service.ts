@@ -1,24 +1,29 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { ExecutionContext, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateLibraryDto } from './dto/create-library.dto';
 import { UpdateLibraryDto } from './dto/update-library.dto';
 import LibraryRepository from './repository/library.repository';
 import Library from './schema/library.schema';
 import FileService from 'src/utils/files/file.service';
-import { ConfigService } from '@nestjs/config';
+import { Types } from 'mongoose';
 
 @Injectable()
 export default class LibraryService {
   constructor(
     private readonly repository: LibraryRepository,
     private readonly fileService: FileService,
-    private readonly configService: ConfigService,
   ) {}
-  create(createLibraryDto: CreateLibraryDto): Promise<Library> {
-    return this.repository.create(createLibraryDto);
+  create(
+    createLibraryDto: CreateLibraryDto,
+    userId: Types.ObjectId
+  ): Promise<Library> {
+    return this.repository.create({
+      ...createLibraryDto,
+      userId: userId,
+    });
   }
 
-  async findAll(): Promise<Library[]> {
-    return await this.repository.find();
+  async findAll(userId: Types.ObjectId): Promise<Library[]> {
+    return await this.repository.find({userId: userId});
   }
 
   async find(id: string): Promise<string> {
@@ -29,8 +34,8 @@ export default class LibraryService {
     throw new NotFoundException();
   }
 
-  update(id: string, updateLibraryDto: UpdateLibraryDto): Promise<Library> {
-    return this.repository.findByIdAndUpdate(id, updateLibraryDto);
+  update(request: any, updateLibraryDto: UpdateLibraryDto): Promise<Library> {
+    return this.repository.findByIdAndUpdate(request.user._id, updateLibraryDto);
   }
 
   async remove(id: string): Promise<void> {
@@ -47,13 +52,13 @@ export default class LibraryService {
     }
   }
 
-  async upload(file: Express.Multer.File, path: string) {
+  async upload(userId: Types.ObjectId, file: Express.Multer.File, path: string) {
     const s3FilePath = await this.fileService.upload(file, path);
     const filePayload: CreateLibraryDto = {
       name: file.originalname,
       type: file.mimetype,
       path: s3FilePath.path,
     };
-    return await this.create(filePayload);
+    return await this.create(filePayload, userId);
   }
 }

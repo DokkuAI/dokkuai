@@ -16,8 +16,8 @@ export default class LibraryRepository {
     return doc;
   }
 
-  async find(): Promise<Library[]> {
-    const doc = await this.model.find();
+  async find(query: any): Promise<Library[]> {
+    const doc = await this.model.find(query);
     return doc;
   }
 

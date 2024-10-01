@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { SchemaTypes, Types } from 'mongoose';
-import User from 'src/user/schema/user.schema';
 
 export interface INote {
   name: string;

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req } from '@nestjs/common';
 import WorkspaceService from './workspace.service';
 import { CreateWorkspaceDto } from './dto/create-workspace.dto';
 import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
@@ -9,8 +9,8 @@ export default class WorkspaceController {
   constructor(private readonly workspaceService: WorkspaceService) {}
 
   @Post()
-  create(@Body() createWorkspaceDto: CreateWorkspaceDto): Promise<Workspace> {
-    return this.workspaceService.create(createWorkspaceDto);
+  create(@Body() createWorkspaceDto: CreateWorkspaceDto, @Req() request: any): Promise<Workspace> {
+    return this.workspaceService.create(createWorkspaceDto, request.user._id);
   }
 
   @Get()
