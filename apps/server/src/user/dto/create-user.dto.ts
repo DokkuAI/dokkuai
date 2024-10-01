@@ -1,6 +1,7 @@
-import { IsEmail, IsEnum, IsOptional, IsString, ValidateNested } from 'class-validator';
+import { IsEmail, IsEnum, IsMongoId, IsOptional, IsString, ValidateNested } from 'class-validator';
 import { DesignationType, IUser, Size, WorkType } from '../schema/user.schema';
 import { Type } from 'class-transformer';
+import {  Types } from 'mongoose';
 
 class AboutUserDto {
   
@@ -22,21 +23,23 @@ class AboutUserDto {
 }
 
 export class CreateUserDto implements IUser {
+  @IsString()
+  externalId: string;
 
-    @IsString()
-    externalId: string;
-    
-    @IsString()
-    firstName: string;
+  @IsString()
+  firstName: string;
 
-    @IsString()
-    lastName: string;
+  @IsString()
+  lastName: string;
 
-    @IsEmail()
-    email: string;
+  @IsEmail()
+  email: string;
 
-    @ValidateNested()
-    @Type(() => AboutUserDto)
-    @IsOptional()
-    about?: AboutUserDto;
+  @ValidateNested()
+  @Type(() => AboutUserDto)
+  @IsOptional()
+  about?: AboutUserDto;
+
+  @IsMongoId()
+  workspaces: Types.ObjectId[];
 }

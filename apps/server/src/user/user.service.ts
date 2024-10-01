@@ -3,11 +3,15 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import User from './schema/user.schema';
 import UserRepository from './repository/user.repository';
+import { LoggerService } from 'src/utils/helper/logger.service';
 
 @Injectable()
 export default class UserService {
   private readonly repository: UserRepository;
-  constructor(repository: UserRepository) {
+  constructor(
+    repository: UserRepository,
+    private readonly logger: LoggerService,
+  ) {
     this.repository = repository;
   }
 

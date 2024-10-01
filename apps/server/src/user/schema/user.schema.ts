@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { SchemaTypes, Types } from 'mongoose';
 
 export enum Size {
   INDIVISUAL = '0-1',
@@ -57,8 +58,7 @@ class AboutUser {
 
 @Schema({ timestamps: true })
 export default class User implements IUser {
-
-  @Prop({required: true})
+  @Prop({ required: true })
   externalId: string;
 
   @Prop({ required: true })
@@ -72,6 +72,9 @@ export default class User implements IUser {
 
   @Prop({ type: AboutUser })
   about?: AboutUser;
+
+  @Prop({ required: true, ref: 'Workspace', type: [SchemaTypes.ObjectId] })
+  workspaces: Types.ObjectId[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

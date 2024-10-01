@@ -12,13 +12,15 @@ import { Reflector } from '@nestjs/core';
 @Injectable()
 export default class ValidateGuard implements CanActivate {
   private jwt: string;
+  private devDomain: string;
   constructor(
-    private readonly authservice: AuthService,
+    private readonly authService: AuthService,
     private readonly configService: ConfigService,
     private readonly logger: LoggerService,
     private reflector: Reflector,
   ) {
     this.jwt = this.configService.getOrThrow<string>('jwt');
+    this.devDomain = this.configService.getOrThrow<string>('devDomain');
   }
   async canActivate(context: ExecutionContext): Promise<boolean> {
     try {
@@ -26,24 +28,28 @@ export default class ValidateGuard implements CanActivate {
       const handler = context.getHandler();
 
       // Get the module or route's custom metadata to check if we should skip this guard
-      const isExcluded = this.reflector.get<boolean>('isExcluded', handler);
+      const isPublic = this.reflector.get<boolean>('isPublic', handler);
 
-      if (isExcluded) {
+      if (isPublic) {
         return true; // Allow access without applying the guard
       }
-      this.logger.log('Starting uploading file to s3', 'S3Service.putObject');
       const token = request.headers.authorization.split(' ')[1];
       const { sub } = await verifyToken(token, {
         jwtKey: this.jwt,
-        authorizedParties: ['http://localhost:3000'],
+        authorizedParties: [this.devDomain],
       });
-      this.logger.log('Successfully verified token');
-      this.logger.log('Fetching user with externalId: ', sub);
-      request.user = await this.authservice.validate(sub);
-      this.logger.log('Successfully fetched user');
+      this.logger.log(
+        'Successfully verified token',
+        'ValidateGuard.canActivate',
+      );
+      request.user = await this.authService.validate(sub);
       return true;
-    } catch (err) {
-      this.logger.error('Error validating token');
+    } catch (error) {
+      this.logger.error(
+        'Error validating token',
+        'ValidateGuard.canActivate',
+        error,
+      );
       throw new BadRequestException();
     }
   }

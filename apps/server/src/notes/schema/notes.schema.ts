@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Interface } from 'readline';
+import { SchemaTypes, Types } from 'mongoose';
+import User from 'src/user/schema/user.schema';
 
 export interface INote {
   name: string;
@@ -37,6 +38,10 @@ export default class Note implements INote {
 
   @Prop({ required: true })
   path: string;
+  
+  @Prop({ required: true, ref: "User" , type: SchemaTypes.ObjectId})
+  userId: Types.ObjectId;
+  // user: User
 }
 
 export const NoteSchema = SchemaFactory.createForClass(Note);

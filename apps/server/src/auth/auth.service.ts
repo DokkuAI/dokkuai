@@ -3,22 +3,21 @@ import { ConfigService } from '@nestjs/config';
 import { CreateUserDto } from 'src/user/dto/create-user.dto';
 import User from 'src/user/schema/user.schema';
 import UserService from 'src/user/user.service';
+import { LoggerService } from 'src/utils/helper/logger.service';
 import { Webhook } from 'svix';
 
 @Injectable()
 export default class AuthService {
-
   private webhookSecret: string;
   constructor(
     private readonly userService: UserService,
     private readonly configService: ConfigService,
+    private readonly logger: LoggerService,
   ) {
-    this.webhookSecret =
-      this.configService.getOrThrow<string>('webhookSecret');
+    this.webhookSecret = this.configService.getOrThrow<string>('webhookSecret');
   }
 
   async webhook(payload: any, headers: any) {
-
     // Get the Svix headers for verification
     const svix_id = headers['svix-id'];
     const svix_timestamp = headers['svix-timestamp'];
@@ -56,6 +55,7 @@ export default class AuthService {
       firstName: data.first_name,
       lastName: data.last_name,
       email: data.email_addresses[0].email_address,
+      workspaces: []
     };
     await this.userService.create(userPayload);
 
@@ -69,8 +69,10 @@ export default class AuthService {
     const { sub } = decodedJwt;
     const user = await this.userService.findOne({ exteralId: sub });
     if (!user) {
+      this.logger.log('User not found', 'AuthService.validate');
       throw new UnauthorizedException();
     }
+    this.logger.log('Successfully fetched user', 'AuthService.validate');
     return user;
   }
 }

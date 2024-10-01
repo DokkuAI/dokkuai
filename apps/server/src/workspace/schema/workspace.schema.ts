@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { SchemaTypes, Types } from 'mongoose';
 
 export enum WorkspaceType {
   PERSONAL = 'personal',
@@ -21,6 +22,9 @@ export default class Workspace implements IWorkspace {
 
   @Prop({ type: [String] })
   invites?: string[];
+
+  @Prop({ required: true, ref: 'User', type: SchemaTypes.ObjectId })
+  userId: Types.ObjectId;
 }
 
 export const WorkspaceSchema = SchemaFactory.createForClass(Workspace);
