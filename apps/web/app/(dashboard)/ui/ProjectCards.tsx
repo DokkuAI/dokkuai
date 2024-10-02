@@ -13,7 +13,6 @@ const ProjectCards = ({ pinned }: { pinned: boolean }) => {
     getProjectFiles();
     async function getProjectFiles() {
       const sessionToken = await getToken();
-      console.log(sessionToken);
       const res = await axios.get("http://localhost:8080/v1/library", {headers:{Authorization: `Bearer ${sessionToken}`}});
       pinned?   setFiles(res.data.slice(5, 8)):   setFiles(res.data.slice(0,5));
 

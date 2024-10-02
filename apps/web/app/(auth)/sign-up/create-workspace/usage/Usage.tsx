@@ -15,7 +15,6 @@ export default function Usage() {
   async function handleClick() {
     if (solo || team) {
       const workspaceType = {type : solo?"personal":"team"};
-      console.log(workspaceType);
       const {data} = await axios.post("http://localhost:8080/v1/workspace", workspaceType);
       localStorage.setItem("id", data._id);
       router.push("/sign-up/create-workspace/details");

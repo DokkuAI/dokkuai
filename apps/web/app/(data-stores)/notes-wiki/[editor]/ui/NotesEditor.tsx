@@ -12,7 +12,6 @@ const NotesEditor = ({ id }: { id: string }) => {
   });
   const handleNoteChange = async (content: JSONContent) => {
     // setNoteContent(content);
-    console.log(id);
     await axios.put(`http://localhost:8080/v1/notes/${id}`, {
       content: JSON.stringify(content),
     });
