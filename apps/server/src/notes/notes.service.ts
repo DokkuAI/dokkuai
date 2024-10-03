@@ -15,7 +15,7 @@ export default class NoteService {
   ) {}
   async create(createNoteDto: CreateNoteDto, userId: Types.ObjectId): Promise<Notes> {
     const res = await this.upload({ ...createNoteDto, path: 'temp' });
-    return this.repository.create({
+    return await this.repository.create({
       ...createNoteDto,
       path: res.path,
       userId: userId,
@@ -26,20 +26,20 @@ export default class NoteService {
     return await this.repository.find({userId: userId});
   }
 
-  async find(id: string): Promise<Notes> {
+  async find(id: string): Promise<any> {
     // 1. fetch doc from db
     const doc = await this.repository.findById(id);
     if (doc) {
       // 2. fetch content from s3
       const key = doc.path;
-      const res = await this.fileService.getFile(key);
-      return doc;
+      const file = await this.fileService.getFile(key);
+      return file;
     }
     throw new NotFoundException();
   }
 
   async update(id: string, updateNoteDto: UpdateNoteDto): Promise<Notes> {
-    return this.repository.findByIdAndUpdate(id, updateNoteDto);
+    return await this.repository.findByIdAndUpdate(id, updateNoteDto);
   }
 
   async saveNote(saveNoteDto: SaveNoteDto, id: string): Promise<string> {
