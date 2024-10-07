@@ -1,10 +1,9 @@
-import Projects from "./ui/Projects";
-import Button from "../(data-stores)/ui/Button";
-import EditIcon from "@/public/Edit.svg";
+import MyProjects from "./ui/MyProjects";
 import ProjectCards from "./ui/ProjectCards";
 import ActivityLog from "./ui/ActivityLog";
 import { Suspense } from "react";
 import Skeleton from "@/components/ui/Skeleton";
+import CreateProject from "./ui/CreateProject";
 
 const page = () => {
   return (
@@ -15,15 +14,19 @@ const page = () => {
             Recently Viewed
           </div>
           <div className="flex gap-5">
-            <ProjectCards pinned={false} />
+            <Suspense fallback={<Skeleton />}>
+              <ProjectCards />
+            </Suspense>
           </div>
         </div>
         <div className="flex flex-col gap-5">
           <div className="text-[20px] leading-[30px] font-bold text-[#323842]">
             Pinned
           </div>
-          <div className="flex gap-5">
-            {/* <ProjectCards pinned={true} /> */}
+          <div className="flex gap-5 overflow-y-auto">
+            <Suspense fallback={<Skeleton />}>
+              <ProjectCards />
+            </Suspense>
           </div>
         </div>
         <div className="flex flex-col gap-5">
@@ -31,10 +34,8 @@ const page = () => {
             My Projects
           </div>
           <div className="flex flex-col gap-3">
-            <div className="flex justify-between items-center">
-              <Button title="Create New" svg={EditIcon} />
-            </div>
-            <Projects />
+            <CreateProject />
+            <MyProjects />
           </div>
         </div>
       </div>
@@ -42,12 +43,12 @@ const page = () => {
         <div className="text-[20px] leading-[30px] font-bold text-[#323842]">
           Activity Logs
         </div>
-        <Suspense fallback={<Skeleton/>}><ActivityLog /></Suspense>
-        
+        <Suspense fallback={<Skeleton />}>
+          <ActivityLog />
+        </Suspense>
       </div>
     </div>
   );
 };
-
 
 export default page;

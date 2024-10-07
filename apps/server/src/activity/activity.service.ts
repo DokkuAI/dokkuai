@@ -8,16 +8,18 @@ import { Types } from 'mongoose';
 export default class ActivityService {
   constructor(private readonly repository: ActivityRepository) {}
 
-  async create(createActivityDto: CreateActivityDto, id: Types.ObjectId): Promise<Activity> {
-    return this.repository.create({...createActivityDto, userId: id});
+  async create(
+    createActivityDto: CreateActivityDto,
+    id: Types.ObjectId,
+  ): Promise<Activity> {
+    return this.repository.create({ ...createActivityDto, userId: id });
   }
 
   async findAll(id: string): Promise<Activity[]> {
     return await this.repository.find({ workspaceId: id });
   }
 
-  async find(id: string): Promise<Activity> {
+  async find(id: Types.ObjectId): Promise<Activity> {
     return this.repository.findById(id);
   }
-
 }

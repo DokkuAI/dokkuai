@@ -1,36 +1,45 @@
-import { Table, TableBody, TableHeader, TableRow } from "@/components/ui/table";
-import React from "react";
-import HeadCell from "../../(data-stores)/ui/HeadCell";
-import Row from "./ProjectRow";
+"use client";
+
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import ProjectRow from "./ProjectRow";
+import { useAuth } from "@clerk/nextjs";
 
 const Projects = () => {
+  const [projects, setProjects] = useState([]);
+  const [dlt, setDlt] = useState(false);
+  const { getToken } = useAuth();
+
+  // useEffect(() => {
+  //   getLibraryFiles();
+  //   async function getLibraryFiles() {
+  //     const token = await getToken();
+
+  //     const { data } = await axios.get(
+  //       "http://localhost:8080/v1/project",
+  //       {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       }
+  //     );
+  //     setProjects(data.slice(0, 8));
+  //   }
+  // }, [dlt]);
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <HeadCell title="" className="w-14" />
-          <HeadCell title="PROJECTS" className="" />
-          <HeadCell title="DATE CREATED" className="w-40" />
-          <HeadCell title="TAGS" className="" />
-          <HeadCell title="CREATED BY" className="" />
-          <HeadCell title="OPTIONS" className="text-center w-10" />
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        <Row
-          name="Robotics"
-          dateCreated="November 21, 2024"
-          tags="$250.00"
-          createdBy="John"
-        />
-        <Row
-          name="Telepathy"
-          dateCreated="June 2, 2024"
-          tags="-"
-          createdBy="me"
-        />
-      </TableBody>
-    </Table>
+    <>
+      {projects.map((project: any) => {
+        return (
+          <ProjectRow
+            id={project._id}
+            favourite={project.favourite}
+            title={project.title}
+            dateCreated={project.createdAt.slice(0, 10)}
+            tags={project.tag ?? "-"}
+            createdBy={project.createdBy || "-"}
+            setDlt={setDlt}
+          />
+        );
+      })}
+    </>
   );
 };
 

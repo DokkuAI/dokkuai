@@ -10,7 +10,7 @@ export default function ProjectCard({
   date,
   avatar,
 }: {
-  pinned?: boolean;
+  pinned: boolean;
   name: string;
   date: string;
   title: string;

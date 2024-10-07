@@ -3,7 +3,7 @@ import UploadIcon from "@/public/Upload.svg";
 import SearchIcon from "@/public/Search.svg";
 import FilterIcon from "@/public/Filter.svg";
 import ViewIcon from "@/public/View.svg";
-import AllFilesIcon from "@/public/AllFiles.svg";
+import AllNotesIcon from "@/public/AllFiles.svg";
 import LinkedNotesIcon from "@/public/LinkedNotes.svg";
 
 import Image from "next/image";
@@ -11,16 +11,16 @@ import Button from "../ui/Button";
 import Notes from "./ui/Notes";
 import CreateNote from "./ui/CreateNote";
 
-function page() {
+function NotesWiki() {
   return (
-    <Tabs defaultValue="allFiles" className="w-full">
+    <Tabs defaultValue="allNotes" className="w-full">
       <div className="flex justify-between px-6 lg:px-16 items-center py-2 shadow">
         <TabsList className="gap-4 bg-transparent text-[14px] leading-[22px] font-bold text-[#5E5D5A]">
-          <TabsTrigger value="allFiles" className="flex gap-2 px-2">
-            <Image src={AllFilesIcon} alt="icon" />
+          <TabsTrigger value="allNotes" className="flex gap-2 px-2">
+            <Image src={AllNotesIcon} alt="icon" />
             All Notes
           </TabsTrigger>
-          <TabsTrigger value="onlyPDFs" className="flex gap-2 px-2">
+          <TabsTrigger value="linkedDocs" className="flex gap-2 px-2">
             <Image src={LinkedNotesIcon} alt="icon" />
             Linked Docs
           </TabsTrigger>
@@ -34,22 +34,12 @@ function page() {
         </div>
       </div>
 
-      <TabsContent value="allFiles" className="mt-0">
+      <TabsContent value="allNotes" className="mt-0">
         <div className="w-full pt-6 px-10">
           <Notes />
         </div>
       </TabsContent>
-      <TabsContent value="onlyPDFs" className="mt-0">
-        <div className="w-full pt-6 px-10">
-          <Notes />
-        </div>
-      </TabsContent>
-      <TabsContent value="onlyLinks" className="mt-0">
-        <div className="w-full pt-6 px-10">
-          <Notes />
-        </div>
-      </TabsContent>
-      <TabsContent value="other" className="mt-0">
+      <TabsContent value="linkedDocs" className="mt-0">
         <div className="w-full pt-6 px-10">
           <Notes />
         </div>
@@ -58,4 +48,4 @@ function page() {
   );
 }
 
-export default page;
+export default NotesWiki;

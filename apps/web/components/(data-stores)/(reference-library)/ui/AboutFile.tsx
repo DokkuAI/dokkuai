@@ -1,25 +1,35 @@
+"use client"; 
+
 import StarIcon from "@/public/Star.svg";
 import Image from "next/image";
 import ReadPdfIcon from "@/public/ReadPdf.svg";
 import ExportIcon from "@/public/Export.svg";
 import PenIcon from "@/public/Pen.svg";
-import AddTagIcon from "@/public/AddTag.svg"
-import LinkTypeIcon from "@/public/LinkType.svg"
+import AddTagIcon from "@/public/AddTag.svg";
+import LinkTypeIcon from "@/public/LinkType.svg";
 import { Textarea } from "@/components/ui/textarea";
-import RemoveIcon from "@/public/Remove.svg"
+import RemoveIcon from "@/public/Remove.svg";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 const FileDetails = () => {
-  return (
-    <div className="w-full h-dvh flex items-center justify-center bg-[#171A1F66]">
-      <div className="flex flex-col bg-white w-2/5 min-w-[500px] px-6 pb-6 pt-3 gap-2">
+  const searchParams = useSearchParams();
+  return searchParams.get("showDetails") === "y" ? (
+    <div className="fixed w-full h-dvh -translate-x-50 -translate-y-50 z-10  bg-gray-800/50 flex justify-center items-center">
+      <div className="flex flex-col bg-white w-2/5 min-w-[500px] px-6 pb-6 pt-3 gap-2 rounded-lg">
         <div className="flex justify-end cursor-pointer">
-          <Image src={RemoveIcon} alt="close icon" />
+          <Link href="/reference-library">
+            <Image src={RemoveIcon} alt="close icon" />
+          </Link>
         </div>
         <div className="flex gap-3 w-full my-1">
           <div className="text-[14px] leading-[22px] text-[#565E6C] font-normal">
             Journal Article
           </div>
           <Image src={StarIcon} alt="star icon" className="cursor-pointer" />
+          <div className="flex flex-grow items-center cursor-pointer justify-end">
+            <Image src={PenIcon} alt="pen icon" />
+          </div>
         </div>
         <div className="text-[20px] leading-[30px] text-[#171A1F] font-bold w-full">
           ChatGPT for Robotics: Design System for Robust Implementation
@@ -44,12 +54,6 @@ const FileDetails = () => {
         <div className="flex justify-between items-center">
           <div className="text-[14px] leading-[22px] text-[#171A1F] font-bold">
             Abstract
-          </div>
-          <div className="flex gap-2 items-center cursor-pointer">
-            <Image src={PenIcon} alt="pen icon" />
-            <div className="text-[14px] leading-[22px] text-[#9095A0] font-semibold">
-              Edit
-            </div>
           </div>
         </div>
         <div className="text-[14px] leading-[22px] text-[#565E6C] font-normal">
@@ -91,7 +95,7 @@ const FileDetails = () => {
         />
       </div>
     </div>
-  );
+  ) : null;
 };
 
 export default FileDetails;

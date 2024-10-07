@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import DeleteNote from "./DeleteNote";
 import NoteTitle from "../../ui/RecordTitle";
+import NotePin from "./NotePin";
 
 export default function NotesRow({
   id,
@@ -21,6 +22,7 @@ export default function NotesRow({
   pages,
   tags,
   createdBy,
+  pinned,
   setDlt,
 }: any) {
   return (
@@ -47,7 +49,7 @@ export default function NotesRow({
             <DropdownMenuItem>
               <DeleteNote id={id} setDlt={setDlt} />
             </DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
+            <DropdownMenuItem><NotePin pinned={pinned} id={id}/></DropdownMenuItem>
             <DropdownMenuItem>Team</DropdownMenuItem>
             <DropdownMenuItem>Subscription</DropdownMenuItem>
           </DropdownMenuContent>

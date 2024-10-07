@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/dropdown-menu";
 import DeleteFile from "./DeleteFile";
 import FileTitle from "../../ui/RecordTitle";
+import Link from "next/link";
+import FilePin from "./FilePin";
 
 export default function DocsRow({
   id,
@@ -24,6 +26,7 @@ export default function DocsRow({
   source,
   tags,
   dateAdded,
+  pinned,
   setDlt,
 }: any) {
   function selectTypeIcon(type: string) {
@@ -59,8 +62,12 @@ export default function DocsRow({
             <DropdownMenuItem>
               <DeleteFile id={id} setDlt={setDlt} />
             </DropdownMenuItem>
-            <DropdownMenuItem>Billing</DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href="/reference-library?showDetails=y">Details</Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <FilePin pinned={pinned} id={id} />
+            </DropdownMenuItem>
             <DropdownMenuItem>Subscription</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

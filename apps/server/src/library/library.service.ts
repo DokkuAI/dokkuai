@@ -22,8 +22,8 @@ export default class LibraryService {
     });
   }
 
-  async findAll(userId: Types.ObjectId): Promise<Library[]> {
-    return await this.repository.find({userId: userId});
+  async findAll(query: any, offset: number): Promise<Library[]> {
+    return await this.repository.find(query, offset);
   }
 
   async find(id: string): Promise<string> {
@@ -34,8 +34,8 @@ export default class LibraryService {
     throw new NotFoundException();
   }
 
-  update(request: any, updateLibraryDto: UpdateLibraryDto): Promise<Library> {
-    return this.repository.findByIdAndUpdate(request.user._id, updateLibraryDto);
+  update(id: string, updateLibraryDto: UpdateLibraryDto): Promise<Library> {
+    return this.repository.findByIdAndUpdate(id, updateLibraryDto);
   }
 
   async remove(id: string): Promise<void> {
@@ -58,6 +58,7 @@ export default class LibraryService {
       name: file.originalname,
       type: file.mimetype,
       path: s3FilePath.path,
+      pinned: false
     };
     return await this.create(filePayload, userId);
   }

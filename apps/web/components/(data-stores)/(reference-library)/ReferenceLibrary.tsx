@@ -12,12 +12,14 @@ import Library from "./ui/Library";
 import Upload from "./ui/Upload";
 import UploadIcon from "@/public/Upload.svg";
 import Link from "next/link";
+import FileDetails from "./ui/AboutFile";
 
-function page() {
+function ReferenceLibrary() {
   return (
     <>
       <Upload />
-      <Tabs defaultValue="allFiles" className="w-full">
+      <FileDetails />
+      <Tabs defaultValue="allFiles" className="w-full flex-grow flex flex-col">
         <div className="flex justify-between px-4 lg:px-16 items-center py-2 shadow">
           <TabsList className="gap-4 bg-transparent text-[14px] leading-[22px] font-bold text-[#5E5D5A]">
             <TabsTrigger value="allFiles" className="flex gap-2 px-2">
@@ -47,10 +49,8 @@ function page() {
           </div>
         </div>
 
-        <TabsContent value="allFiles" className="mt-0">
-          <div className="w-full pt-6 px-10">
+        <TabsContent value="allFiles" className=" px-5 mt-5 max-h-[600px] overflow-y-auto">
             <Library />
-          </div>
         </TabsContent>
         <TabsContent value="onlyPDFs" className="mt-0">
           <div className="w-full pt-6 px-10">
@@ -72,4 +72,4 @@ function page() {
   );
 }
 
-export default page;
+export default ReferenceLibrary;

@@ -1,5 +1,6 @@
-import { IsArray, IsOptional, IsString } from 'class-validator';
+import { IsArray, IsBoolean, IsMongoId, IsOptional, IsString } from 'class-validator';
 import { INote, INoteContent } from '../schema/notes.schema';
+import { Types } from 'mongoose';
 
 export class CreateNoteDto implements INoteContent {
   @IsString()
@@ -28,7 +29,14 @@ export class CreateNoteDto implements INoteContent {
   @IsOptional()
   size?: string;
 
-  @IsString()
+  @IsMongoId()
   @IsOptional()
   path: string;
+
+  @IsMongoId()
+  @IsOptional()
+  projectId?: Types.ObjectId;
+
+  @IsBoolean()
+  pinned: boolean;
 }

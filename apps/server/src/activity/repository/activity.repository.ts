@@ -1,5 +1,5 @@
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import Activity from '../schema/activity.schema';
 
@@ -15,7 +15,7 @@ export default class ActivityRepository {
     return doc;
   }
 
-  async findById(id: string): Promise<Activity> {
+  async findById(id: Types.ObjectId): Promise<Activity> {
     const doc = await this.model.findById(id);
     return doc;
   }

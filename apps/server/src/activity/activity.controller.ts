@@ -10,6 +10,7 @@ import { CreateActivityDto } from './dto/create-activity.dto';
 import Activity from './schema/activity.schema';
 import ActivityService from './activity.service';
 import { Public } from 'src/decorators/isPublic.decorator';
+import { Types } from 'mongoose';
 
 
 @Controller('activity')
@@ -22,14 +23,12 @@ export default class ActivityController {
   }
 
   @Get(':id')
-  @Public()
   async findAll(@Param('id') id: string): Promise<Activity[]> {
     return await this.activityService.findAll(id);
   }
 
   @Get('/find/:id')
-  @Public()
-  async find(@Param('id') id: string): Promise<Activity> {
+  async find(@Param('id') id: Types.ObjectId): Promise<Activity> {
     return await this.activityService.find(id);
   }
 }

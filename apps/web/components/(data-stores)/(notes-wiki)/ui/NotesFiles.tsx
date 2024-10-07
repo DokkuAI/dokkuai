@@ -26,8 +26,9 @@ const NotesFiles = () => {
             lastModified={note.updatedAt.slice(0, 10)}
             linkTo={note.linkTo || "-"}
             pages={note.page || "-"}
-            tags={note.tag ?? "-"}
+            tags={note.tag || "-"}
             createdBy={note.createdBy || "-"}
+            pinned={note.pinned}
             setDlt={setDlt}
           />
         );

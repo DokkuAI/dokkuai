@@ -13,21 +13,25 @@ import {
   UseInterceptors,
   HttpCode,
   HttpStatus,
-  UseGuards,
   Req,
+  Query,
 } from '@nestjs/common';
 import LibraryService from './library.service';
 import { CreateLibraryDto } from './dto/create-library.dto';
 import { UpdateLibraryDto } from './dto/update-library.dto';
 import Library from './schema/library.schema';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { Types } from 'mongoose';
 
 @Controller('library')
 export default class LibraryController {
   constructor(private readonly libraryService: LibraryService) {}
 
   @Post()
-  create(@Body() createLibraryDto: CreateLibraryDto, @Req() request: any): Promise<Library> {
+  create(
+    @Body() createLibraryDto: CreateLibraryDto,
+    @Req() request: any,
+  ): Promise<Library> {
     return this.libraryService.create(createLibraryDto, request.user._id);
   }
 
@@ -48,18 +52,25 @@ export default class LibraryController {
         ],
       }),
     )
-    @Req() request: any,
+    @Req()
+    request: any,
     file: Express.Multer.File,
   ) {
     return await this.libraryService.upload(request.user._id, file, 'temp');
   }
-
   @Get()
-  findAll(@Req() request: any) {
-    return this.libraryService.findAll(request.user._id);
+  find(@Req() request: any, @Query() params: any) {
+    const offset = +params.offset;
+    return this.libraryService.findAll({ userId: request.user._id }, offset);
   }
 
   @Get(':id')
+  findAll(@Param('id') id: Types.ObjectId, @Query() params: any) {
+    const offset = +params.offset;
+    return this.libraryService.findAll({ projectId: id }, offset);
+  }
+
+  @Get('/find/:id')
   findOne(@Param('id') id: string): Promise<string> {
     return this.libraryService.find(id);
   }
