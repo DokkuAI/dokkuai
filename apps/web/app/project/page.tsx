@@ -7,7 +7,10 @@ import NotesWiki from "@/components/(data-stores)/(notes-wiki)/NotesWiki";
 
 const page = () => {
   return (
-    <Tabs defaultValue="Files" className="w-full min-h-dvh max-h-dvh flex flex-col">
+    <Tabs
+      defaultValue="Files"
+      className="w-full min-h-dvh max-h-dvh"
+    >
       <div className="flex justify-between px-4 lg:px-16 items-center py-2 shadow">
         <TabsList className="flex gap-4 bg-transparent text-[14px] leading-[22px] font-bold text-[#5E5D5A]">
           <TabsTrigger value="Files" className="flex gap-2 px-2">
@@ -20,7 +23,7 @@ const page = () => {
           </TabsTrigger>
         </TabsList>
       </div>
-      <TabsContent value="Files" className="mt-0 flex-grow flex-col flex ">
+      <TabsContent value="Files" className="mt-0">
         <ReferenceLibrary />
       </TabsContent>
       <TabsContent value="Notes" className="mt-0">

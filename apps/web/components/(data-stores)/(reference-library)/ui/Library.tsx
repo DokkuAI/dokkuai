@@ -3,6 +3,7 @@ import HeadCell from "../../ui/HeadCell";
 import LibraryFiles from "./LibraryFiles";
 import { Suspense } from "react";
 import Skeleton from "@/components/ui/Skeleton";
+import React from "react";
 
 export default function Library() {
   return (
@@ -25,5 +26,5 @@ export default function Library() {
         </Suspense>
       </Table>
     </>
-  );
+  ); 
 }

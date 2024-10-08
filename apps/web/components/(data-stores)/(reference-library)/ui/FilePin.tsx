@@ -1,6 +1,7 @@
 "use client";
 import { useAuth } from "@clerk/nextjs";
 import axios from "axios"; 
+import React from "react";
 
 
 const FilePin = ({ pinned, id }: { pinned: boolean; id: string }) => {

@@ -20,8 +20,9 @@ export default class ActivityRepository {
     return doc;
   }
 
-  async find(query: any): Promise<Activity[]> {
-    const doc = await this.model.find(query);
-    return doc;
+  async find(query: any, offset: number): Promise<any> {
+    const doc = await this.model.find(query).limit(10).skip(offset);
+    const totalFiles = await this.model.countDocuments(query);
+    return { files: doc, totalFiles: totalFiles };
   }
 }

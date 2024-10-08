@@ -25,8 +25,8 @@ export default class NoteService {
     return doc;
   }
 
-  async findAll(userId: Types.ObjectId): Promise<Notes[]> {
-    return await this.repository.find({ userId: userId });
+  async findAll(query: any, offset: number): Promise<Notes[]> {
+    return await this.repository.find(query, offset);
   }
 
   async find(id: string): Promise<Notes> {

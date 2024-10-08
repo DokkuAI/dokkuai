@@ -11,6 +11,7 @@ import { Textarea } from "@/components/ui/textarea";
 import RemoveIcon from "@/public/Remove.svg";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import React from "react";
 
 const FileDetails = () => {
   const searchParams = useSearchParams();

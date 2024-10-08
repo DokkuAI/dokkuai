@@ -15,8 +15,8 @@ export default class ActivityService {
     return this.repository.create({ ...createActivityDto, userId: id });
   }
 
-  async findAll(id: string): Promise<Activity[]> {
-    return await this.repository.find({ workspaceId: id });
+  async findAll(query: any, offset: number): Promise<Activity[]> {
+    return await this.repository.find(query, offset);
   }
 
   async find(id: Types.ObjectId): Promise<Activity> {

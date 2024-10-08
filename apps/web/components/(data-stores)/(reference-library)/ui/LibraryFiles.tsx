@@ -2,26 +2,14 @@
 import { getFiles } from "@/lib/action";
 import Row from "./DocsRow";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { Fragment, useEffect } from "react";
-import { useInView } from "react-intersection-observer";
-import { useAuth } from "@clerk/nextjs";
+import usePagination from "@/components/ui/Pagination";
 
 function LibraryFiles() {
-  const { ref, inView } = useInView();
-  const { getToken } = useAuth();
-  const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: ["items", getToken],
+  const { ref, data, hasNextPage } = usePagination({
     queryFn: getFiles,
-    initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.nextPage,
+    url: "http://localhost:8080/v1/library",
   });
-  useEffect(() => {
-    if (inView) {
-      console.log("called");
-      fetchNextPage();
-    }
-  }, [fetchNextPage, inView]);
   return (
     <>
       <TableBody>

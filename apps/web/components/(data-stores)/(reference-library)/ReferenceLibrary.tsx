@@ -19,7 +19,7 @@ function ReferenceLibrary() {
     <>
       <Upload />
       <FileDetails />
-      <Tabs defaultValue="allFiles" className="w-full flex-grow flex flex-col">
+      <Tabs defaultValue="allFiles" className="w-full">
         <div className="flex justify-between px-4 lg:px-16 items-center py-2 shadow">
           <TabsList className="gap-4 bg-transparent text-[14px] leading-[22px] font-bold text-[#5E5D5A]">
             <TabsTrigger value="allFiles" className="flex gap-2 px-2">
@@ -49,23 +49,11 @@ function ReferenceLibrary() {
           </div>
         </div>
 
-        <TabsContent value="allFiles" className=" px-5 mt-5 max-h-[600px] overflow-y-auto">
-            <Library />
-        </TabsContent>
-        <TabsContent value="onlyPDFs" className="mt-0">
-          <div className="w-full pt-6 px-10">
-            <Library />
-          </div>
-        </TabsContent>
-        <TabsContent value="onlyLinks" className="mt-0">
-          <div className="w-full pt-6 px-10">
-            <Library />
-          </div>
-        </TabsContent>
-        <TabsContent value="other" className="mt-0">
-          <div className="w-full pt-6 px-10">
-            <Library />
-          </div>
+        <TabsContent
+          value="allFiles"
+          className=" px-5 mt-5 max-h-[600px] overflow-y-auto"
+        >
+          <Library />
         </TabsContent>
       </Tabs>
     </>

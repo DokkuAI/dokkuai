@@ -4,8 +4,8 @@ import axios from "axios";
 const limit = 12;
 export async function getFiles({ pageParam, queryKey }: { pageParam: number, queryKey: QueryKey}) {
     const offset = pageParam*limit;
-    const getToken: any = queryKey[1];
-  const res = await axios.get(`http://localhost:8080/v1/library?offset=${offset}`, {
+    const [, url, getToken]: any = queryKey;
+  const res = await axios.get(`${url}?offset=${offset}`, {
     headers: { Authorization: `Bearer ${await getToken()}` },
   });
    return {

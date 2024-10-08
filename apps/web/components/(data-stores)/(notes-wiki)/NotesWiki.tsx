@@ -14,7 +14,7 @@ import CreateNote from "./ui/CreateNote";
 function NotesWiki() {
   return (
     <Tabs defaultValue="allNotes" className="w-full">
-      <div className="flex justify-between px-6 lg:px-16 items-center py-2 shadow">
+      <div className="flex justify-between px-4 lg:px-16 items-center py-2 shadow">
         <TabsList className="gap-4 bg-transparent text-[14px] leading-[22px] font-bold text-[#5E5D5A]">
           <TabsTrigger value="allNotes" className="flex gap-2 px-2">
             <Image src={AllNotesIcon} alt="icon" />
@@ -34,15 +34,18 @@ function NotesWiki() {
         </div>
       </div>
 
-      <TabsContent value="allNotes" className="mt-0">
-        <div className="w-full pt-6 px-10">
+      <TabsContent
+        value="allNotes"
+        className=" px-5 mt-5 max-h-[600px] overflow-y-auto"
+      >
           <Notes />
-        </div>
+ 
       </TabsContent>
-      <TabsContent value="linkedDocs" className="mt-0">
-        <div className="w-full pt-6 px-10">
+      <TabsContent
+        value="linkedDocs"
+        className=" px-5 mt-5 max-h-[600px] overflow-y-auto"
+      >
           <Notes />
-        </div>
       </TabsContent>
     </Tabs>
   );

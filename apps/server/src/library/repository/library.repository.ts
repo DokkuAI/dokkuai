@@ -22,7 +22,6 @@ export default class LibraryRepository {
       .limit(10)
       .skip(offset);
     const totalFiles = await this.model.countDocuments(query);
-    console.log({ doc }, totalFiles);
     return { files: doc, totalFiles: totalFiles};
   }
 

@@ -1,6 +1,8 @@
 import { Table, TableBody, TableHeader, TableRow } from "@/components/ui/table";
 import HeadCell from "../../ui/HeadCell";
 import NotesFiles from "./NotesFiles";
+import { Suspense } from "react";
+import Skeleton from "@/components/ui/Skeleton";
 
 export default function Notes() {
   return (
@@ -18,9 +20,9 @@ export default function Notes() {
         </TableRow>
       </TableHeader>
 
-      <TableBody>
-        <NotesFiles/>
-      </TableBody>
+        <Suspense fallback={<Skeleton />}>
+          <NotesFiles />
+        </Suspense>
     </Table>
   );
 }

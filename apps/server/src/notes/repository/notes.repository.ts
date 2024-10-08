@@ -16,11 +16,15 @@ export default class NotesRepository {
     return doc;
   }
 
-  async find(query: any): Promise<Notes[]> {
-    const doc = await this.model.find(query);
-    return doc;
+  async find(query: any, offset: number): Promise<any> {
+    const doc = await this.model
+      .find(query)
+      .limit(10)
+      .skip(offset);
+    const totalFiles = await this.model.countDocuments(query);
+    return { files: doc, totalFiles: totalFiles};
   }
-  
+
   async findById(id: string): Promise<Notes> {
     const doc = await this.model.findById(id).lean();
     return doc;

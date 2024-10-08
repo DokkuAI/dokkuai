@@ -8,6 +8,7 @@ import {
   Delete,
   Put,
   Req,
+  Query,
 } from '@nestjs/common';
 import NoteService from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
@@ -19,7 +20,10 @@ export default class NotesController {
   constructor(private readonly notesService: NoteService) {}
 
   @Post()
-  create(@Body() createNoteDto: CreateNoteDto, @Req() request: any): Promise<Note> {
+  create(
+    @Body() createNoteDto: CreateNoteDto,
+    @Req() request: any,
+  ): Promise<Note> {
     return this.notesService.create(createNoteDto, request.user._id);
   }
 
@@ -33,13 +37,15 @@ export default class NotesController {
   }
 
   @Get()
-  findAll(@Req() request: any) {
-    return this.notesService.findAll(request.user._id);
+  find(@Req() request: any, @Query() params: any): Promise<Note[]> {
+    const offset = +params.offset;
+    return this.notesService.findAll({ userId: request.user._id }, offset);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Note> {
-    return this.notesService.find(id);
+  findAll(@Param('id') id: string, @Query() params: any): Promise<Note[]> {
+    const offset = +params.offset;
+    return this.notesService.findAll({ projctId: id }, offset);
   }
 
   @Patch(':id')
