@@ -13,17 +13,20 @@ export default class NoteService {
     private readonly repository: NotesRepository,
     private readonly fileService: FileService,
   ) {}
-  async create(createNoteDto: CreateNoteDto, userId: Types.ObjectId): Promise<Notes> {
-    const res = await this.upload({ ...createNoteDto, path: 'temp' });
-    return await this.repository.create({
+  async create(
+    createNoteDto: CreateNoteDto,
+    userId: Types.ObjectId,
+  ): Promise<Notes> {
+    const doc = await this.repository.create({
       ...createNoteDto,
-      path: res.path,
       userId: userId,
     });
+    await this.upload({ ...createNoteDto, path: 'temp', name: doc._id });
+    return doc;
   }
 
   async findAll(userId: Types.ObjectId): Promise<Notes[]> {
-    return await this.repository.find({userId: userId});
+    return await this.repository.find({ userId: userId });
   }
 
   async find(id: string): Promise<any> {
@@ -67,7 +70,7 @@ export default class NoteService {
     }
   }
 
-  async upload(noteData: { name?: string; content: string; path: string }) {
+  async upload(noteData: { name: string; content: string; path: string }) {
     const notePayload = {
       name: noteData?.name ?? new Types.ObjectId().toString(),
       type: 'json',

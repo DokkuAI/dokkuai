@@ -2,13 +2,14 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { SchemaTypes, Types } from 'mongoose';
 
 export interface INote {
-  name: string;
-  linkTo?: string;
+   linkTo?: string;
   page?: string;
   tags?: string[];
   createdBy: string;
   size?: string;
   path: string;
+  projectId?: Types.ObjectId;
+  pinned: boolean;
 }
 
 export interface INoteContent extends INote {
@@ -35,12 +36,17 @@ export default class Note implements INote {
   @Prop()
   size?: string;
 
-  @Prop({ required: true })
+  @Prop()
   path: string;
-  
-  @Prop({ required: true, ref: "User" , type: SchemaTypes.ObjectId})
+
+  @Prop({ required: true, ref: 'User', type: SchemaTypes.ObjectId })
   userId: Types.ObjectId;
-  // user: User
+
+  @Prop({ type: SchemaTypes.ObjectId, ref: 'Project' })
+  projectId?: Types.ObjectId;
+
+  @Prop({required: true})
+  pinned: boolean;
 }
 
 export const NoteSchema = SchemaFactory.createForClass(Note);

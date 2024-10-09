@@ -11,7 +11,7 @@ export default class NotesRepository {
     private readonly model: Model<Notes>,
   ) {}
 
-  async create(note: Notes): Promise<Notes> {
+  async create(note: Notes): Promise<any> {
     const doc = await this.model.create(note);
     return doc;
   }
