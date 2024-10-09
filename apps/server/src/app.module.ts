@@ -13,6 +13,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import ValidateGuard from './guard/validate.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { ActivityModule } from './activity/activity.module';
+import { ProjectModule } from './project/project.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -34,6 +35,7 @@ import { ActivityModule } from './activity/activity.module';
     AuthModule,
     UtilsModule,
     ActivityModule,
+    ProjectModule,
   ],
   controllers: [AppController],
   providers: [AppService, {provide: APP_GUARD, useClass: ValidateGuard}],
