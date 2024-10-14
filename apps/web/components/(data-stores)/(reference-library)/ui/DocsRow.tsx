@@ -8,14 +8,14 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import DeleteFile from "./DeleteFile";
 import FileTitle from "../../ui/RecordTitle";
 import Link from "next/link";
 import FilePin from "./FilePin";
+import { ProjectLink } from "../../ui/ProjectLink";
+import { Details } from "./FileDetails";
 
 export default function DocsRow({
   id,
@@ -27,7 +27,6 @@ export default function DocsRow({
   tags,
   dateAdded,
   pinned,
-  setDlt,
 }: any) {
   function selectTypeIcon(type: string) {
     switch (type) {
@@ -57,18 +56,49 @@ export default function DocsRow({
             <Image src={ThreeDotIcon} alt="three dot icon" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <DeleteFile id={id} setDlt={setDlt} />
+            <DropdownMenuItem>Read</DropdownMenuItem>
+            <DropdownMenuItem>Download</DropdownMenuItem>
+            <DeleteFile id={id} />
+            <DropdownMenuItem className="p-0">
+              <Details id={id} />
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link href="/reference-library?showDetails=y">Details</Link>
+            <FilePin pinned={pinned} id={id} />
+            <DropdownMenuItem className="p-0">
+              <ProjectLink id={id} url='library'/>
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              <FilePin pinned={pinned} id={id} />
+            <DropdownMenuItem className="p-0">
+              <Link
+                className="w-full px-2 py-1.5"
+                href={{
+                  pathname: "/workspace",
+                  query: { chat: true },
+                }}
+              >
+                Chat with document
+              </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
+            <DropdownMenuItem className="p-0">
+              <Link
+                className="w-full px-2 py-1.5"
+                href={{
+                  pathname: "/workspace",
+                  query: { comment: true },
+                }}
+              >
+                Add in comments
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="p-0">
+              <Link
+                className="w-full px-2 py-1.5"
+                href={{
+                  pathname: "/workspace",
+                  query: { note: true },
+                }}
+              >
+                Write in notes
+              </Link>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </TableCell>

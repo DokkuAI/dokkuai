@@ -13,20 +13,23 @@ export default class ActivityController {
     @Body() createActivityDto: CreateActivityDto,
     @Req() request: any,
   ): Promise<Activity> {
-    return this.activityService.create(createActivityDto, request.user._id);
+    return this.activityService.create(
+      createActivityDto,
+      request.user._id,
+      request.user.workspaceId,
+    );
   }
 
-  @Get(':id')
+  @Get()
   async findAll(
-    @Param('id') id: string,
+    @Req() request: any,
     @Query() params: any,
   ): Promise<Activity[]> {
     const offset = +params.offset;
-
-    return await this.activityService.findAll({projectId: id}, offset);
+    return await this.activityService.findAll({ workspaceId: request.user.workspaceId }, offset);
   }
 
-  @Get('/find/:id')
+  @Get(':id')
   async find(@Param('id') id: Types.ObjectId): Promise<Activity> {
     return await this.activityService.find(id);
   }

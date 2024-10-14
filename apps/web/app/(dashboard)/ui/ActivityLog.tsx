@@ -1,7 +1,5 @@
 "use client";
-import ActivityIcon from "@/public/Activity.svg";
 import { Log } from "./Log";
-import { Fragment  } from "react";
 import usePagination from "@/components/ui/Pagination";
 import { getFiles } from "@/lib/action";
 
@@ -11,25 +9,25 @@ export default function ActivityLog() {
     url: "http://localhost:8080/v1/activity",
   });
   return (
-    <div className="flex-grow w-full overflow-y-auto">
+    <div className="flex-grow w-full overflow-y-auto h-[600px]">
       {data?.pages.map((page: any) => {
         return (
-          <Fragment key={page.currentPage}>
-            {page.data.map((log: any, index: number) => {
+          <>
+            {page.data.map((log: any) => {
               return (
                 <>
-                  <Log
+                  <Log key={log.id}
+                    type={log.type}
                     name={log.name}
                     date={log.createdAt.slice(0, 10)}
                     title={log.title}
                     avatar="/Avatar.png"
-                    svg={ActivityIcon}
                   />
-                  {index != page.data.length - 1 ? <BlueLine /> : null}
+                  <BlueLine />
                 </>
               );
             })}
-          </Fragment>
+          </>
         );
       })}
       {hasNextPage && (

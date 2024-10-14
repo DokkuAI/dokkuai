@@ -26,7 +26,6 @@ import { Types } from 'mongoose';
 @Controller('library')
 export default class LibraryController {
   constructor(private readonly libraryService: LibraryService) {}
-
   @Post()
   create(
     @Body() createLibraryDto: CreateLibraryDto,
@@ -52,12 +51,19 @@ export default class LibraryController {
         ],
       }),
     )
-    @Req()
-    request: any,
     file: Express.Multer.File,
+    @Req() request: any,
+    @Body('data') rawBody: string,
   ) {
-    return await this.libraryService.upload(request.user._id, file, 'temp');
+    const body = JSON.parse(rawBody);
+    return await this.libraryService.upload(
+      request.user._id,
+      file,
+      'temp',
+      body,
+    );
   }
+
   @Get()
   find(@Req() request: any, @Query() params: any) {
     const offset = +params.offset;
@@ -69,22 +75,20 @@ export default class LibraryController {
     const offset = +params.offset;
     return this.libraryService.findAll({ projectId: id }, offset);
   }
-
   @Get('/find/:id')
-  findOne(@Param('id') id: string): Promise<string> {
-    return this.libraryService.find(id);
+  findOne(@Param('id') id: Types.ObjectId): Promise<Library> {
+    return this.libraryService.findOne(id);
   }
-
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id') id: Types.ObjectId,
     @Body() updateLibraryDto: UpdateLibraryDto,
   ): Promise<Library> {
     return this.libraryService.update(id, updateLibraryDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string): Promise<void> {
+  async remove(@Param('id') id: Types.ObjectId): Promise<void> {
     return this.libraryService.remove(id);
   }
 }

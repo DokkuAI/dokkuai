@@ -17,6 +17,7 @@ export interface IFile {
   path: string;
   projectId?: Types.ObjectId;
   pinned: boolean;
+  note?: string;
 }
 
 @Schema({ timestamps: true })
@@ -50,6 +51,9 @@ export default class Library implements IFile {
 
   @Prop({ required: true})
   pinned: boolean;
+
+  @Prop({ maxlength: 300})
+  note?: string;
 }
 
 export const LibrarySchema = SchemaFactory.createForClass(Library);

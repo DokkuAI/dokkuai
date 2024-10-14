@@ -10,9 +10,10 @@ export default class ActivityService {
 
   async create(
     createActivityDto: CreateActivityDto,
-    id: Types.ObjectId,
+    userId: Types.ObjectId,
+    workspaceId: Types.ObjectId,
   ): Promise<Activity> {
-    return this.repository.create({ ...createActivityDto, userId: id });
+    return this.repository.create({ ...createActivityDto, userId: userId, workspaceId: workspaceId });
   }
 
   async findAll(query: any, offset: number): Promise<Activity[]> {

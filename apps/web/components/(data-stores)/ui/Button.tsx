@@ -8,3 +8,4 @@ export default function Button({ title, svg }: any) {
     </div>
   );
 }
+

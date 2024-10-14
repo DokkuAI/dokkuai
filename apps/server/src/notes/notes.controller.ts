@@ -9,12 +9,15 @@ import {
   Put,
   Req,
   Query,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import NoteService from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import Note from './schema/notes.schema';
 import SaveNoteDto from './dto/save-note.dto';
+import { Types } from 'mongoose';
 @Controller('notes')
 export default class NotesController {
   constructor(private readonly notesService: NoteService) {}
@@ -27,10 +30,10 @@ export default class NotesController {
     return this.notesService.create(createNoteDto, request.user._id);
   }
 
-  // @HttpCode(HttpStatus.ACCEPTED)
+  @HttpCode(HttpStatus.ACCEPTED)
   @Put(':id')
   saveNote(
-    @Param('id') id: string,
+    @Param('id') id: Types.ObjectId,
     @Body() saveNoteDto: SaveNoteDto,
   ): Promise<string> {
     return this.notesService.saveNote(saveNoteDto, id);
@@ -48,6 +51,11 @@ export default class NotesController {
     return this.notesService.findAll({ projctId: id }, offset);
   }
 
+  @Get('/find/:id')
+  findOne(@Param('id') id: Types.ObjectId): Promise<Note> {
+    return this.notesService.findOne(id);
+  }
+
   @Patch(':id')
   update(
     @Param('id') id: string,
@@ -57,7 +65,7 @@ export default class NotesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<void> {
+  remove(@Param('id') id: Types.ObjectId): Promise<void> {
     return this.notesService.remove(id);
   }
 }

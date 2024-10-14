@@ -4,15 +4,17 @@ import { JSONContent } from "novel";
 import Editor from "@/components/(editor)/Editor";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
-const NotesEditor = ({ id }: { id: string }) => {
+const NotesEditor = () => {
+  const searchParams = useSearchParams();
   const [noteContent] = useState<JSONContent>({
     type: "doc",
     content: [],
   });
   const handleNoteChange = async (content: JSONContent) => {
     // setNoteContent(content);
-    await axios.put(`http://localhost:8080/v1/notes/${id}`, {
+    await axios.put(`http://localhost:8080/v1/notes/${searchParams.get('id')}`, {
       content: JSON.stringify(content),
     });
   };

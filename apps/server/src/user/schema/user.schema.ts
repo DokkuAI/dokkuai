@@ -39,6 +39,7 @@ export interface IUser {
     size?: Size;
     description?: string;
   };
+  workspaceId: Types.ObjectId;
 }
 
 @Schema({ _id: false })
@@ -74,7 +75,7 @@ export default class User implements IUser {
   about?: AboutUser;
 
   @Prop({ required: true, ref: 'Workspace', type: [SchemaTypes.ObjectId] })
-  workspaces: Types.ObjectId[];
+  workspaceId: Types.ObjectId;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

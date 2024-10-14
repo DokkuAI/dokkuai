@@ -3,13 +3,12 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import User from './schema/user.schema';
 import UserRepository from './repository/user.repository';
+import { Types } from 'mongoose';
 
 @Injectable()
 export default class UserService {
   private readonly repository: UserRepository;
-  constructor(
-    repository: UserRepository,
-  ) {
+  constructor(repository: UserRepository) {
     this.repository = repository;
   }
 
@@ -29,11 +28,14 @@ export default class UserService {
     return this.repository.findOne(query);
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(
+    id: Types.ObjectId,
+    updateUserDto: UpdateUserDto,
+  ): Promise<User> {
     return this.repository.findByIdAndUpdate(id, updateUserDto);
   }
 
-  async remove(id: string): Promise<null> {
+  async remove(id: Types.ObjectId): Promise<null> {
     return this.repository.findByIdAndDelete(id);
   }
 }

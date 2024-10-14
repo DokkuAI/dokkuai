@@ -21,7 +21,7 @@ export default class NoteService {
       ...createNoteDto,
       userId: userId,
     });
-    await this.upload({ ...createNoteDto, path: 'temp', name: doc._id });
+    await this.upload({ content: createNoteDto.content, path: 'temp', name: doc._id });
     return doc;
   }
 
@@ -29,7 +29,7 @@ export default class NoteService {
     return await this.repository.find(query, offset);
   }
 
-  async find(id: string): Promise<Notes> {
+  async findOne(id: Types.ObjectId): Promise<Notes> {
     // 1. fetch doc from db
     const doc = await this.repository.findById(id);
     if (doc) {
@@ -45,7 +45,7 @@ export default class NoteService {
     return this.repository.findByIdAndUpdate(id, updateNoteDto);
   }
 
-  async saveNote(saveNoteDto: SaveNoteDto, id: string): Promise<string> {
+  async saveNote(saveNoteDto: SaveNoteDto, id: Types.ObjectId): Promise<string> {
     const doc = await this.repository.findById(id);
     const noteData = {
       name: doc.name,
@@ -56,7 +56,7 @@ export default class NoteService {
     return;
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: Types.ObjectId): Promise<void> {
     // 1. Fetch doc from db
     const fileDoc = await this.repository.findById(id);
 

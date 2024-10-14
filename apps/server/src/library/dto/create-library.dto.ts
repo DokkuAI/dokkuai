@@ -3,7 +3,7 @@ import { IFile } from "../schema/library.schema";
 import { Types } from "mongoose";
 
 export class CreateLibraryDto implements IFile {
-  // @IsEnum(FileType)
+
   @IsMimeType()
   type: string;
 
@@ -36,4 +36,8 @@ export class CreateLibraryDto implements IFile {
 
   @IsBoolean()
   pinned: boolean;
+
+  @IsString()
+  @IsOptional()
+  note?: string
 }

@@ -15,3 +15,11 @@ export async function getFiles({ pageParam, queryKey }: { pageParam: number, que
        offset + limit < res.data.totalFiles ? pageParam+1 : null
    };
 }
+
+export async function getDetails({queryKey}:{queryKey: QueryKey}) {
+  const [, url, getToken]: any = queryKey;
+  const res = await axios.get(`${url}`, {
+    headers: { Authorization: `Bearer ${await getToken()}` },
+  });
+  return { data: res.data};
+}

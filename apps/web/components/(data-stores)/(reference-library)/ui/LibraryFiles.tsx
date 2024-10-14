@@ -2,7 +2,7 @@
 import { getFiles } from "@/lib/action";
 import Row from "./DocsRow";
 import { TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Fragment, useEffect } from "react";
+import { Fragment } from "react";
 import usePagination from "@/components/ui/Pagination";
 
 function LibraryFiles() {
@@ -29,7 +29,6 @@ function LibraryFiles() {
                     tags={file.year || "-"}
                     dateAdded={file.createdAt.slice(0, 10)}
                     pinned={file.pinned}
-                    setDlt={false}
                   />
                 );
               })}

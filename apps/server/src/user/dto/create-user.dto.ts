@@ -41,5 +41,6 @@ export class CreateUserDto implements IUser {
   about?: AboutUserDto;
 
   @IsMongoId()
-  workspaces: Types.ObjectId[];
+  @IsOptional()
+  workspaceId: Types.ObjectId;
 }
