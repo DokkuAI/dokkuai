@@ -6,7 +6,7 @@ import ReadPdfIcon from "@/public/ReadPdf.svg";
 import ExportIcon from "@/public/Export.svg";
 import PenIcon from "@/public/Pen.svg";
 import AddTagIcon from "@/public/AddTag.svg";
-import LinkTypeIcon from "@/public/LinkType.svg";
+// import LinkTypeIcon from "@/public/LinkType.svg";
 import { Textarea } from "@/components/ui/textarea";
 import RemoveIcon from "@/public/Remove.svg";
 import { useSearchParams, usePathname } from "next/navigation";
