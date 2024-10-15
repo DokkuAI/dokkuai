@@ -5,26 +5,29 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import { useAuth } from "@clerk/nextjs";
 
 export default function Usage() {
   const [team, setTeam] = useState<boolean>(false);
   const [solo, setSolo] = useState<boolean>(false);
   const [display, setDisplay] = useState<boolean>(false);
+  const {getToken} = useAuth();
   const router = useRouter();
 
   async function handleClick() {
     if (solo || team) {
       const workspaceType = {type : solo?"personal":"team"};
-      const {data} = await axios.post("http://localhost:8080/v1/workspace", workspaceType);
-      localStorage.setItem("id", data._id);
-      router.push("/sign-up/create-workspace/details");
+      const res = await axios.post("http://localhost:8080/v1/workspace", workspaceType, {headers: {Authorization: `Bearer ${await getToken()}`}});
+      if(res.status === 200){
+        router.push("/sign-up/create-workspace/details");
+      }
     } else {
       setDisplay(true);
     }
   }
 
   return (
-    <div className="flex flex-col gap-[13px] text-[#171A1F] text-center items-center mx-4">
+    <div className="flex flex-col flex-grow gap-[13px] text-[#171A1F] text-center items-center justify-center mx-4">
       <div className="text-[28px] leading-[42px] font-bold">
         How do you want to use DokkuAI?
       </div>

@@ -8,38 +8,52 @@ import {
   Delete,
   Put,
   Req,
+  Query,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import NoteService from './notes.service';
 import { CreateNoteDto } from './dto/create-note.dto';
 import { UpdateNoteDto } from './dto/update-note.dto';
 import Note from './schema/notes.schema';
 import SaveNoteDto from './dto/save-note.dto';
+import { Types } from 'mongoose';
 @Controller('notes')
 export default class NotesController {
   constructor(private readonly notesService: NoteService) {}
 
   @Post()
-  create(@Body() createNoteDto: CreateNoteDto, @Req() request: any): Promise<Note> {
+  create(
+    @Body() createNoteDto: CreateNoteDto,
+    @Req() request: any,
+  ): Promise<Note> {
     return this.notesService.create(createNoteDto, request.user._id);
   }
 
-  // @HttpCode(HttpStatus.ACCEPTED)
+  @HttpCode(HttpStatus.ACCEPTED)
   @Put(':id')
   saveNote(
-    @Param('id') id: string,
+    @Param('id') id: Types.ObjectId,
     @Body() saveNoteDto: SaveNoteDto,
   ): Promise<string> {
     return this.notesService.saveNote(saveNoteDto, id);
   }
 
   @Get()
-  findAll(@Req() request: any) {
-    return this.notesService.findAll(request.user._id);
+  find(@Req() request: any, @Query() params: any): Promise<Note[]> {
+    const offset = +params.offset;
+    return this.notesService.findAll({ userId: request.user._id }, offset);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<Note> {
-    return this.notesService.find(id);
+  findAll(@Param('id') id: string, @Query() params: any): Promise<Note[]> {
+    const offset = +params.offset;
+    return this.notesService.findAll({ projctId: id }, offset);
+  }
+
+  @Get('/find/:id')
+  findOne(@Param('id') id: Types.ObjectId): Promise<Note> {
+    return this.notesService.findOne(id);
   }
 
   @Patch(':id')
@@ -51,7 +65,7 @@ export default class NotesController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<void> {
+  remove(@Param('id') id: Types.ObjectId): Promise<void> {
     return this.notesService.remove(id);
   }
 }

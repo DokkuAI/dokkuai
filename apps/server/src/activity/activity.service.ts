@@ -10,13 +10,14 @@ export default class ActivityService {
 
   async create(
     createActivityDto: CreateActivityDto,
-    id: Types.ObjectId,
+    userId: Types.ObjectId,
+    workspaceId: Types.ObjectId,
   ): Promise<Activity> {
-    return this.repository.create({ ...createActivityDto, userId: id });
+    return this.repository.create({ ...createActivityDto, userId: userId, workspaceId: workspaceId });
   }
 
-  async findAll(id: string): Promise<Activity[]> {
-    return await this.repository.find({ workspaceId: id });
+  async findAll(query: any, offset: number): Promise<Activity[]> {
+    return await this.repository.find(query, offset);
   }
 
   async find(id: Types.ObjectId): Promise<Activity> {

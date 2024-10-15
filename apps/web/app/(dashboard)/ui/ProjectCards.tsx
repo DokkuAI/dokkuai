@@ -11,17 +11,16 @@ const ProjectCards = () => {
   useEffect(() => {
     getProjectFiles();
     async function getProjectFiles() {
-      const sessionToken = await getToken();
       const res = await axios.get("http://localhost:8080/v1/library", {
-        headers: { Authorization: `Bearer ${sessionToken}` },
+        headers: { Authorization: `Bearer ${await getToken()}` },
       });
-      setFiles(res.data.slice(0, 4));
+      setFiles(res.data.files.slice(0,4));
     }
   }, [ getToken]);
   return (
     <>
       {files.map((file: any, index: number) => {
-        return (file.pinned ?
+        return (
           <Card
             key={index}
             pinned={file.pinned}
@@ -29,7 +28,7 @@ const ProjectCards = () => {
             date={file.createdAt.slice(0, 10) || "-"}
             title={file.name || "Telepathy"}
             avatar="/Avatar.png"
-          /> : null
+          /> 
         );
       })}
     </>

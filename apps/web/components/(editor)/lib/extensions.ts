@@ -150,7 +150,7 @@ const mathematics = Mathematics.configure({
 
 const characterCount = CharacterCount.configure();
 
-export const defaultExtensions = [
+export const defaultExtensions: any = [
   starterKit,
   placeholder,
   tiptapLink,

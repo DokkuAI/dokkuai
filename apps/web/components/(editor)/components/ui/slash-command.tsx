@@ -16,7 +16,6 @@ import {
 import { createSuggestionItems } from "novel/extensions";
 import { Command, renderItems } from "novel/extensions";
 import { uploadFn } from "../../lib/image-upload";
-import { string } from "zod";
 
 export const suggestionItems = createSuggestionItems([
   {
@@ -148,7 +147,9 @@ export const suggestionItems = createSuggestionItems([
         if (input.files?.length) {
           const file = input.files[0];
           const pos = editor.view.state.selection.from;
-          uploadFn(file, editor.view, pos);
+          if (file) {
+            uploadFn(file, editor.view, pos);
+          }
         }
       };
       input.click();
@@ -217,4 +218,3 @@ export const slashCommand = Command.configure({
     render: renderItems,
   },
 });
- 

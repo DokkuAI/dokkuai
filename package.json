@@ -17,6 +17,10 @@
     "node": ">=18"
   },
   "dependencies": {
+    "axios": "^1.7.7",
+    "class-variance-authority": "^0.7.0",
+    "lucide-react": "^0.451.0",
+    "novel": "^0.5.0",
     "zod": "^3.23.8"
   }
 }

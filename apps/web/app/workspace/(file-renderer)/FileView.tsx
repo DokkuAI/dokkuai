@@ -39,7 +39,7 @@ export default function FileView({id}: {id: string}) {
       <Worker workerUrl="https://unpkg.com/pdfjs-dist@3.4.120/build/pdf.worker.min.js">
         <Viewer
           defaultScale={1}
-          fileUrl="https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf"
+          fileUrl="https://d3ohoj0hhuci2p.cloudfront.net/temp/Geography.pdf"
           plugins={[defaultPluginInstance, dropPluginInstance]}
         />
       </Worker>

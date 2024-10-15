@@ -1,52 +1,55 @@
 "use client";
 
-import { string, z } from "zod";
+// import { string, z } from "zod";
 // import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import axios from "axios";
+import { useAuth } from "@clerk/nextjs";
 
 const Details = () => {
-  const forSchema = z.object({
-    work: z.enum(["engineer", "manager", "researcher", "other"], {
-      message: "Work is required",
-    }),
-    role: z.enum(
-      ["executive", "researcher", "manager", "engineer", "freelancer", "other"],
-      {
-        message: "Role is required",
-      }
-    ),
-    size: z.enum([
-      "0-1",
-      "2-10",
-      "11-50",
-      "51-200",
-      "201-500",
-      "501-1000",
-      "1001-5000",
-      "5000+",
-    ]),
-    description: string().max(80).optional(),
-  });
+  // const forSchema = z.object({
+  //   work: z.enum(["engineer", "manager", "researcher", "other"], {
+  //     message: "Work is required",
+  //   }),
+  //   role: z.enum(
+  //     ["executive", "researcher", "manager", "engineer", "freelancer", "other"],
+  //     {
+  //       message: "Role is required",
+  //     }
+  //   ),
+  //   size: z.enum([
+  //     "0-1",
+  //     "2-10",
+  //     "11-50",
+  //     "51-200",
+  //     "201-500",
+  //     "501-1000",
+  //     "1001-5000",
+  //     "5000+",
+  //   ]),
+  //   description: string().max(80).optional(),
+  // });
   const router = useRouter();
-
-  // const {register} = useForm();
+  const { getToken } = useAuth();
 
   async function handleSubmit(e: any) {
     e.preventDefault();
-    // const formData = new FormData(e.target);
-    // const userData = {
-    //   work: formData.get("work"),
-    //   designation: formData.get("designation"),
-    //   size: formData.get("size"),
-    //   description: formData.get("description"),
-    // };
-    // await axios.patch(
-    //   "http://localhost:8080/v1/user/",
-    //   {about: userData}
-    // );
-    router.push("/sign-up/create-workspace/workspace");
+    const formData = new FormData(e.target);
+    const userData = {
+      work: formData.get("work"),
+      designation: formData.get("designation"),
+      size: formData.get("size"),
+      description: formData.get("description"),
+    };
+    const res = await axios.patch(
+      "http://localhost:8080/v1/user/",
+      { about: userData },
+      { headers: { Authorization: `Bearer ${await getToken()}` } }
+    );
+    if (res.status === 200) {
+      router.push("/sign-up/create-workspace/workspace");
+    }
   }
 
   return (

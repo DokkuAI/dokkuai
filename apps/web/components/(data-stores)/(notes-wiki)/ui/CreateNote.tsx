@@ -16,71 +16,74 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
 const CreateNote = () => {
   const router = useRouter();
   const { getToken } = useAuth();
   const [title, setTitle] = useState("");
-
+  const searchParams = useSearchParams();
   async function handleClick() {
-    const token = await getToken();
+    const projectId = searchParams.get("id");
     const content = JSON.stringify({
       type: "doc",
       content: [],
     });
-    const res = await axios.post(
-      "http://localhost:8080/v1/notes",
-      {
-        content: content,
-        name: title,
-      },
-      { headers: { Authorization: `Bearer ${token}` } }
-    );
-
+    const body: any = {
+      content: content,
+      name: title,
+      pinned: false,
+      createdBy: "me"
+    };
+    if (projectId) {
+      body.projectId = projectId;
+    }
+    
+    const res = await axios.post("http://localhost:8080/v1/notes", body, {
+      headers: { Authorization: `Bearer ${await getToken()}` },
+    });
     await axios.post(
       "http://localhost:8080/v1/activity",
       {
         type: "created-note",
         title: `Crerated Note ${title}`,
-        workspaceId: "",
+        name: 'Devesh'
       },
-      { headers: { Authorization: `Bearer ${token}` } }
+      { headers: { Authorization: `Bearer ${await getToken()}` } }
     );
-    router.push(`/notes-wiki/${res.data._id}`);
+    router.push(`/editor?id=${res.data._id}`);
   }
 
   return (
-    <div onClick={handleClick}>
-      <Dialog>
-        <DialogTrigger>
-          <MyButton title="Create New" svg={EditIcon} />
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Enter Note Details.</DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="name" className="font-semibold">
-                Name
-              </Label>
-              <Input
-                placeholder="Note Name..."
-                id="name"
-                value={title}
-                className="col-span-3"
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-              />
-            </div>
+    <Dialog>
+      <DialogTrigger>
+        <MyButton title="Create New" svg={EditIcon} />
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Enter Note Details.</DialogTitle>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="font-semibold">
+              Name
+            </Label>
+            <Input
+              placeholder="Note Name..."
+              id="name"
+              value={title}
+              className="col-span-3"
+              onChange={(e) => {
+                setTitle(e.target.value);
+              }}
+            />
           </div>
-          <DialogFooter>
-            <Button onClick={handleClick}>Create</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+        </div>
+        <DialogFooter>
+          <Button onClick={handleClick}>Create</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 };
 

@@ -6,13 +6,14 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import DeleteNote from "./DeleteNote";
 import NoteTitle from "../../ui/RecordTitle";
 import NotePin from "./NotePin";
+import Link from "next/link";
+import { ProjectLink } from "../../ui/ProjectLink";
+import { FilesLink } from "./NotesLink";
 
 export default function NotesRow({
   id,
@@ -44,14 +45,18 @@ export default function NotesRow({
             <Image src={ThreeDotIcon} alt="three dot icon" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
             <DropdownMenuItem>
               <DeleteNote id={id} setDlt={setDlt} />
             </DropdownMenuItem>
-            <DropdownMenuItem><NotePin pinned={pinned} id={id}/></DropdownMenuItem>
-            <DropdownMenuItem>Team</DropdownMenuItem>
-            <DropdownMenuItem>Subscription</DropdownMenuItem>
+            <DropdownMenuItem>
+              <NotePin pinned={pinned} id={id} />
+            </DropdownMenuItem>
+            <DropdownMenuItem className="p-0">
+              <ProjectLink id={id} url="notes" />
+            </DropdownMenuItem>
+            <DropdownMenuItem className="p-0">
+              <FilesLink id={id}/>
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </TableCell>

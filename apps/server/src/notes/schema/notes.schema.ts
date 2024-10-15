@@ -2,10 +2,10 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { SchemaTypes, Types } from 'mongoose';
 
 export interface INote {
+  name: string;
    linkTo?: string;
   page?: string;
   tags?: string[];
-  createdBy: string;
   size?: string;
   path: string;
   projectId?: Types.ObjectId;

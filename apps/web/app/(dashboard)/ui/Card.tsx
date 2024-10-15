@@ -1,6 +1,6 @@
 import PinIcon from "@/public/Pin.svg";
 import Image from "next/image";
-import BlueNotesIcon from "@/public/BlueNotes.svg";
+import GreenFilesIcon from "@/public/GreenFiles.svg";
 
 
 export default function ProjectCard({
@@ -24,7 +24,7 @@ export default function ProjectCard({
         </div>
       ) : null}
       <div className="flex gap-2 items-center">
-        <Image src={BlueNotesIcon} alt="blue notes icon" />
+        <Image src={GreenFilesIcon} alt="blue notes icon" />
         <div className="text-[14px] leading-[22px] text-[#323842]">{title}</div>
       </div>
       <div className="flex gap-1 items-center">

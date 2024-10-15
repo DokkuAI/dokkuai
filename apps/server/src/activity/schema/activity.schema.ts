@@ -10,9 +10,7 @@ export enum ActivityType {
 }
 
 export interface IActivity {
-  workspaceId: Types.ObjectId;
   type: ActivityType;
-  name: string;
   title: string;
 }
 

@@ -4,9 +4,11 @@ import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useAuth } from "@clerk/nextjs";
+
 const Workspace = () => {
   const router = useRouter();
-
+  const { getToken } = useAuth();
   const [name, setName] = useState("");
   const [display, setDisplay] = useState<boolean>(false);
 
@@ -17,19 +19,21 @@ const Workspace = () => {
   async function handleClickContinue() {
     if (name) {
       const workspaceName = { name: name };
-      const id = localStorage.getItem("id");
-      await axios.patch(
-        `http://localhost:8080/v1/workspace/${id}`,
-        workspaceName
+      const res = await axios.patch(
+        `http://localhost:8080/v1/workspace`,
+        workspaceName,
+        { headers: { Authorization: `Bearer ${await getToken()}` } }
       );
-      router.push("/sign-up/invite");
+      if(res.status === 200) {
+        router.push("/sign-up/invite");
+      }
     } else {
       setDisplay(true);
     }
   }
 
   return (
-    <div className="flex flex-col gap-[13px] text-[#171A1F] text-center items-center mx-4">
+    <div className="flex flex-col gap-[13px] text-[#171A1F] text-center items-center mx-4 flex-grow">
       <div className="text-[28px] leading-[42px] font-bold">
         Give your workspace a name
       </div>

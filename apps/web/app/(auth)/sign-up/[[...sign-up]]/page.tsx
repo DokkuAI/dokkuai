@@ -5,7 +5,9 @@ import { Suspense } from "react";
 export default function Page() {
   return (
     <Suspense fallback={<Skeleton />}>
-      <SignUp />
+    <div className="w-full flex flex-grow justify-center items-center">
+      
+      <SignUp /></div>
     </Suspense>
   );
   

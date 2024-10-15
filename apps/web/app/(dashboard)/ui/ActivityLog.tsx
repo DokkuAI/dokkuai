@@ -1,40 +1,40 @@
 "use client";
-import ActivityIcon from "@/public/Activity.svg";
 import { Log } from "./Log";
-import axios from "axios";
-import { useAuth } from "@clerk/nextjs";
-import { useEffect, useState } from "react";
+import usePagination from "@/components/ui/Pagination";
+import { getFiles } from "@/lib/action";
 
 export default function ActivityLog() {
-  const { getToken } = useAuth();
-  const [logs, setLogs] = useState([]);
-  useEffect(() => {
-    async function getActivityLogs() {
-      const token = await getToken();
-      const res = await axios.get(
-        "http://localhost:8080/v1/activity/66f58c0ea460109c68bcec3c",
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setLogs(res.data);
-    }
-    getActivityLogs();
-  },[]);
+  const { ref, data, hasNextPage } = usePagination({
+    queryFn: getFiles,
+    url: "http://localhost:8080/v1/activity",
+  });
   return (
-    <div className="flex-grow w-full overflow-y-auto">
-      {logs.map((log: any, index: number) => {
+    <div className="flex-grow w-full overflow-y-auto h-[600px]">
+      {data?.pages.map((page: any) => {
         return (
           <>
-            <Log
-              name={log.name}
-              date={log.createdAt.slice(0, 10)}
-              title={log.title}
-              avatar="/Avatar.png"
-              svg={ActivityIcon}
-            />
-            {index != logs.length - 1 ? <BlueLine /> : null}
+            {page.data.map((log: any) => {
+              return (
+                <>
+                  <Log key={log.id}
+                    type={log.type}
+                    name={log.name}
+                    date={log.createdAt.slice(0, 10)}
+                    title={log.title}
+                    avatar="/Avatar.png"
+                  />
+                  <BlueLine />
+                </>
+              );
+            })}
           </>
         );
       })}
+      {hasNextPage && (
+        <div ref={ref}>
+          <div className="w-full text-center">LOADING.....</div>
+        </div>
+      )}
     </div>
   );
 }

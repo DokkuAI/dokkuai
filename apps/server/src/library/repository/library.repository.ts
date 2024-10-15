@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import Library from '../schema/library.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { UpdateLibraryDto } from '../dto/update-library.dto';
@@ -18,21 +18,20 @@ export default class LibraryRepository {
 
   async find(query: any, offset: number): Promise<any> {
     const doc = await this.model
-      .find(query)
+      .find()
       .limit(10)
       .skip(offset);
     const totalFiles = await this.model.countDocuments(query);
-    console.log({ doc }, totalFiles);
     return { files: doc, totalFiles: totalFiles};
   }
 
-  async findById(id: string): Promise<Library> {
+  async findById(id: Types.ObjectId): Promise<Library> {
     const doc = await this.model.findById(id);
     return doc;
   }
 
   async findByIdAndUpdate(
-    id: string,
+    id: Types.ObjectId,
     updateLibraryDto: UpdateLibraryDto,
   ): Promise<Library> {
     const doc = await this.model.findByIdAndUpdate(id, updateLibraryDto, {
@@ -41,7 +40,7 @@ export default class LibraryRepository {
     return doc;
   }
 
-  async findByIdAndDelete(id: string): Promise<null> {
+  async findByIdAndDelete(id: Types.ObjectId): Promise<null> {
     await this.model.findByIdAndDelete(id);
     return;
   }

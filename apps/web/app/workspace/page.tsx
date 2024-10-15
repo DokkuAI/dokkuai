@@ -2,7 +2,6 @@
 import { Suspense } from "react";
 import Editor from "../../components/(editor)/Editor";
 import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels";
-import PdfBar from "./ui/PdfBar";
 import UtilityBar from "./ui/UtilityBar";
 import { useState } from "react";
 import FileView from "./(file-renderer)/FileView";
@@ -10,26 +9,45 @@ import { JSONContent } from "novel";
 import CommentBox from "./(comment)/CommentBox";
 import Chat from "./(chat)/Chat";
 import { useSearchParams } from "next/navigation";
-
+import Navbar from "@/components/ui/Navbar";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import Hamburger from "./ui/Hamburger";
 export default function Page() {
-  const [chat, setChat] = useState<boolean>(true);
-  const [comment, setComment] = useState<boolean>(false);
-  const [note, setNote] = useState<boolean>(false);
-    const searchParams = useSearchParams();
-  const id = searchParams.get('id');
+  const searchParams = useSearchParams();
+  const [chat, setChat] = useState<boolean>(
+    searchParams.get("chat") === "true"
+  );
+  const [comment, setComment] = useState<boolean>(
+    searchParams.get("comment") === "true"
+  );
+  const [note, setNote] = useState<boolean>(
+    searchParams.get("note") === "true"
+  );
+
+  const id = searchParams.get("id");
   const [noteContent, setNoteContent] = useState<JSONContent>({
     type: "doc",
     content: [],
   });
-  
+
   const handleNoteChange = (content: JSONContent) => {
     setNoteContent(content);
   };
 
   return (
     <div className="h-dvh flex  flex-col ">
-      <div className="w-full flex">
-        <PdfBar />
+      <div className="h-[56px] w-full flex items-center gap-4 pl-4 text-[#565E6C] border-2">
+        <Hamburger />
+        <div className="flex-grow">
+          <Navbar />
+        </div>
         <UtilityBar
           chat={chat}
           setChat={setChat}

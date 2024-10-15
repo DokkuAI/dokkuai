@@ -1,4 +1,8 @@
-import { ExecutionContext, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ExecutionContext,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateLibraryDto } from './dto/create-library.dto';
 import { UpdateLibraryDto } from './dto/update-library.dto';
 import LibraryRepository from './repository/library.repository';
@@ -14,7 +18,7 @@ export default class LibraryService {
   ) {}
   create(
     createLibraryDto: CreateLibraryDto,
-    userId: Types.ObjectId
+    userId: Types.ObjectId,
   ): Promise<Library> {
     return this.repository.create({
       ...createLibraryDto,
@@ -25,8 +29,10 @@ export default class LibraryService {
   async findAll(query: any, offset: number): Promise<Library[]> {
     return await this.repository.find(query, offset);
   }
-
-  async find(id: string): Promise<string> {
+  async findOne(id: Types.ObjectId): Promise<Library> {
+    return await this.repository.findById(id);
+  }
+  async find(id: Types.ObjectId): Promise<string> {
     const doc = await this.repository.findById(id);
     if (doc) {
       return this.fileService.getCdnLink(doc.path);
@@ -34,11 +40,14 @@ export default class LibraryService {
     throw new NotFoundException();
   }
 
-  update(id: string, updateLibraryDto: UpdateLibraryDto): Promise<Library> {
+  update(
+    id: Types.ObjectId,
+    updateLibraryDto: UpdateLibraryDto,
+  ): Promise<Library> {
     return this.repository.findByIdAndUpdate(id, updateLibraryDto);
   }
 
-  async remove(id: string): Promise<void> {
+  async remove(id: Types.ObjectId): Promise<void> {
     // 1. Fetch doc from db
     const fileDoc = await this.repository.findById(id);
 
@@ -52,14 +61,19 @@ export default class LibraryService {
     }
   }
 
-  async upload(userId: Types.ObjectId, file: Express.Multer.File, path: string) {
+  async upload(
+    userId: Types.ObjectId,
+    file: Express.Multer.File,
+    path: string,
+    body: { projectId?: Types.ObjectId },
+  ) {
     const s3FilePath = await this.fileService.upload(file, path);
-    const filePayload: CreateLibraryDto = {
+    const createLibraryDto: CreateLibraryDto = {
       name: file.originalname,
       type: file.mimetype,
       path: s3FilePath.path,
-      pinned: false
+      pinned: false,
     };
-    return await this.create(filePayload, userId);
+    return await this.create({...createLibraryDto, ...body}, userId);
   }
 }

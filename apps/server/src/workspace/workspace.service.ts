@@ -4,13 +4,16 @@ import { UpdateWorkspaceDto } from './dto/update-workspace.dto';
 import WorkspaceRepository from './repository/workspace.repository';
 import Workspace from './schema/workspace.schema';
 import { Types } from 'mongoose';
+import UserService from 'src/user/user.service';
 
 @Injectable()
 export default class WorkspaceService {
-  constructor(private readonly repository: WorkspaceRepository) {}
+  constructor(private readonly repository: WorkspaceRepository, private readonly userService: UserService) {}
 
   async create(createWorkspaceDto: CreateWorkspaceDto, userId: Types.ObjectId): Promise<Workspace> {
-    return this.repository.create({...createWorkspaceDto, userId: userId});
+    const doc:any = this.repository.create({...createWorkspaceDto, userId: userId});
+    this.userService.update(userId, {workspaceId: doc._id});
+    return doc;
   }
 
   findAll() {

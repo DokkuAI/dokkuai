@@ -1,7 +1,7 @@
 import { createImageUpload } from "novel/plugins";
 import { toast } from "sonner";
 
-const onUpload = (file: File) => {
+const onUpload = (file: File | undefined) => {
   const promise = fetch("/api/upload", {
     method: "POST",
     headers: {
@@ -49,11 +49,11 @@ const onUpload = (file: File) => {
 export const uploadFn = createImageUpload({
   onUpload,
   validateFn: (file) => {
-    if (!file.type.includes("image/")) {
+    if (!file?.type.includes("image/")) {
       toast.error("File type not supported.");
       return false;
     }
-    if (file.size / 1024 / 1024 > 20) {
+    if (file?.size / 1024 / 1024 > 20) {
       toast.error("File size too big (max 20MB).");
       return false;
     }

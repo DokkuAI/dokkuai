@@ -11,6 +11,7 @@ import UserService from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import User from './schema/user.schema';
+import { Types } from 'mongoose';
 
 @Controller('user')
 export default class UserController {
@@ -33,14 +34,15 @@ export default class UserController {
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id') id: Types.ObjectId
+    ,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
     return this.userService.update(id, updateUserDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string): Promise<null> {
+  remove(@Param('id') id: Types.ObjectId): Promise<null> {
     return this.userService.remove(id);
   }
 }
