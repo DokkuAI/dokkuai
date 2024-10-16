@@ -8,6 +8,7 @@ import { Fragment } from "react";
 
 const NotesFiles = () => {
    const { ref, data, hasNextPage } = usePagination({
+    key: "notes",
      queryFn: getFiles,
      url: "http://localhost:8080/v1/notes",
    });

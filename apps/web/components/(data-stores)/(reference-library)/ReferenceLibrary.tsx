@@ -10,7 +10,6 @@ import Image from "next/image";
 import Button from "../ui/Button";
 import Library from "./ui/Library";
 import UploadIcon from "@/public/Upload.svg";
-import Link from "next/link";
 import ImportProject from "./ui/ImportProject";
 
 function ReferenceLibrary() {
@@ -46,25 +45,7 @@ function ReferenceLibrary() {
 
         <TabsContent
           value="allFiles"
-          className=" px-5 mt-5 max-h-[600px] overflow-y-auto"
-        >
-          <Library />
-        </TabsContent>
-        <TabsContent
-          value="onlyPDFs"
-          className=" px-5 mt-5 max-h-[600px] overflow-y-auto"
-        >
-          <Library />
-        </TabsContent>
-        <TabsContent
-          value="onlyLinks"
-          className=" px-5 mt-5 max-h-[600px] overflow-y-auto"
-        >
-          <Library />
-        </TabsContent>
-        <TabsContent
-          value="other"
-          className=" px-5 mt-5 max-h-[600px] overflow-y-auto"
+          className=" px-10 mt-5 max-h-[600px] overflow-y-auto"
         >
           <Library />
         </TabsContent>

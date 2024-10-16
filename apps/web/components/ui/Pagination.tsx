@@ -8,19 +8,24 @@ import { useEffect } from "react";
 
 interface UsePaginationParams {
   // eslint-disable-next-line no-unused-vars
+  key: string;
+  // eslint-disable-next-line no-unused-vars
   queryFn: (params: any) => Promise<any>;
   url: string;
+  limit?: number
 }
 
 
-function usePagination({
-  queryFn,
-  url,
-}: UsePaginationParams): {ref: any, data: any, hasNextPage: boolean} {
+function usePagination({key, queryFn, url, limit=12 }: UsePaginationParams): {
+  ref: any;
+  data: any;
+  hasNextPage: boolean;
+  fetchNextPage: any;
+} {
   const { ref, inView } = useInView();
   const { getToken } = useAuth();
   const { data, fetchNextPage, hasNextPage } = useInfiniteQuery({
-    queryKey: ["items", url, getToken],
+    queryKey: [key, url, getToken, limit],
     queryFn: queryFn,
     initialPageParam: 0,
     getNextPageParam: (lastPage: any) => lastPage.nextPage,
@@ -30,7 +35,7 @@ function usePagination({
       fetchNextPage();
     }
   }, [fetchNextPage, inView]);
-  return { ref, data, hasNextPage };
+  return { ref, data, hasNextPage, fetchNextPage };
 }
 
 export default usePagination

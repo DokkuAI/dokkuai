@@ -1,7 +1,11 @@
 "use client";
 import { Suspense } from "react";
 import Editor from "../../components/(editor)/Editor";
-import { PanelGroup, Panel, PanelResizeHandle } from "react-resizable-panels";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 import UtilityBar from "./ui/UtilityBar";
 import { useState } from "react";
 import FileView from "./(file-renderer)/FileView";
@@ -10,15 +14,8 @@ import CommentBox from "./(comment)/CommentBox";
 import Chat from "./(chat)/Chat";
 import { useSearchParams } from "next/navigation";
 import Navbar from "@/components/ui/Navbar";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 import Hamburger from "./ui/Hamburger";
+
 export default function Page() {
   const searchParams = useSearchParams();
   const [chat, setChat] = useState<boolean>(
@@ -45,9 +42,7 @@ export default function Page() {
     <div className="h-dvh flex  flex-col ">
       <div className="h-[56px] w-full flex items-center gap-4 pl-4 text-[#565E6C] border-2">
         <Hamburger />
-        <div className="flex-grow">
-          <Navbar />
-        </div>
+        <Navbar />
         <UtilityBar
           chat={chat}
           setChat={setChat}
@@ -58,51 +53,51 @@ export default function Page() {
         />
       </div>
 
-      <PanelGroup direction="horizontal" className="flex flex-grow">
-        <Panel defaultSize={40} minSize={20} collapsible={true}>
+      <ResizablePanelGroup direction="horizontal" className="flex flex-grow">
+        <ResizablePanel
+          minSize={25}
+          collapsible={true}
+          order={1}
+        >
           <Suspense>
-            <FileView
-              id={"http://localhost:3000/workspace?id=66f544f40ddd271ae90f89bf"}
-            />
+            <FileView id={""} />
           </Suspense>
-        </Panel>
+        </ResizablePanel>
         {comment ? (
           <>
-            <PanelResizeHandle className="gutter gutter-horizontal" />
-            <Panel
-              order={1}
+            <ResizableHandle withHandle />
+            <ResizablePanel
+            defaultSize={40}
+              order={2}
               className="flex"
-              minSize={20}
+              minSize={25}
               collapsible={true}
-              defaultSize={30}
             >
               <CommentBox />
-            </Panel>
+            </ResizablePanel>
           </>
         ) : null}
         {chat ? (
           <>
-            <PanelResizeHandle className="gutter gutter-horizontal" />
-            <Panel
-              order={2}
+            <ResizableHandle withHandle />
+            <ResizablePanel
+              order={3}
               className="flex"
-              minSize={20}
+              minSize={30}
               collapsible={true}
-              defaultSize={30}
             >
               <Chat />
-            </Panel>
+            </ResizablePanel>
           </>
         ) : null}
         {note ? (
           <>
-            <PanelResizeHandle className="gutter gutter-horizontal" />
-            <Panel
-              order={3}
+            <ResizableHandle withHandle />
+            <ResizablePanel
+              order={4}
               className="flex overflow-y-auto"
-              minSize={20}
+              minSize={25}
               collapsible={true}
-              defaultSize={30}
             >
               <div className="flex flex-col p-2 border w-full gap-6 rounded-md bg-card">
                 <Editor
@@ -110,10 +105,10 @@ export default function Page() {
                   onChange={handleNoteChange}
                 />
               </div>
-            </Panel>
+            </ResizablePanel>
           </>
         ) : null}
-      </PanelGroup>
+      </ResizablePanelGroup>
     </div>
   );
 }

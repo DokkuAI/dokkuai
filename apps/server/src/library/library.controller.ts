@@ -67,13 +67,16 @@ export default class LibraryController {
   @Get()
   find(@Req() request: any, @Query() params: any) {
     const offset = +params.offset;
-    return this.libraryService.findAll({ userId: request.user._id }, offset);
+    const limit = +params.limit;
+    return this.libraryService.findAll({ userId: request.user._id }, offset, limit);
   }
 
   @Get(':id')
   findAll(@Param('id') id: Types.ObjectId, @Query() params: any) {
     const offset = +params.offset;
-    return this.libraryService.findAll({ projectId: id }, offset);
+    const limit = +params.limit;
+
+    return this.libraryService.findAll({ projectId: id }, offset, limit);
   }
   @Get('/find/:id')
   findOne(@Param('id') id: Types.ObjectId): Promise<Library> {

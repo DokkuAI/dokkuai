@@ -2,26 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-.split {
-    display: flex;
-    flex-direction: row;
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
 }
 
-.gutter {
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: 50%;
-    width: 10px !important;
+::-webkit-scrollbar
+{
+	width: 8px;
+  height: 8px;
+	background-color: #F5F5F5;
 }
 
-.gutter:hover, .gutter:active {
-    background-color: gray;
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #6E7787;
 }
 
-.gutter.gutter-horizontal {
-    background-image: url('../public/ResizeHandleIcon.svg');
-    cursor: col-resize;
-    
+input[type='checkbox'] {
+    accent-color: black ;
 }
 
 @layer base {

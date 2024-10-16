@@ -19,8 +19,9 @@ const FilePin = ({ pinned, id }: { pinned: boolean; id: string }) => {
     );
   }
   return (
-    <DropdownMenuItem onClick={handleClick}>
-      {pinned ? "Unpin" : "Pin"}
+    <DropdownMenuItem onClick={handleClick} className="cursor-pointer">
+      <div className="w-full">{pinned ? "Unpin" : "Pin"}</div>
+      
     </DropdownMenuItem>
   );
 };
