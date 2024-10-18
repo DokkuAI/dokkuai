@@ -21,8 +21,8 @@ import Navbar from "@/components/ui/Navbar";
 const page = () => {
   return (
     <div className="flex-col flex min-h-dvh max-h-dvh">
-      <div className="h-[56px] w-full flex items-center gap-4 px-[16px]` text-[#565E6C] border-2 px-2">
-        <Sheet >
+      <div className="h-[56px] w-full flex items-center gap-6 text-[#565E6C] border-2 px-3">
+        <Sheet>
           <SheetTrigger>
             <Image src={HamburgerIcon} alt="hamburger icon" />
           </SheetTrigger>
@@ -37,27 +37,25 @@ const page = () => {
         </Sheet>
         <Navbar />
       </div>
-      <div className="flex gap-6 p-5 ">
+      <div className="flex gap-6 p-5 px-10 flex-grow">
         <div className="w-full flex flex-col gap-8">
           <div className="flex flex-col gap-5">
             <div className="text-[20px] leading-[30px] font-bold text-[#323842]">
               Recently Viewed
             </div>
-            <div className="flex gap-5">
               <Suspense fallback={<Skeleton />}>
                 <ProjectCards />
               </Suspense>
-            </div>
           </div>
           <div className="flex flex-col gap-5">
             <div className="text-[20px] leading-[30px] font-bold text-[#323842]">
               Pinned
             </div>
-            <div className="flex gap-5 overflow-y-auto">
+            {/* <div className="flex gap-5 overflow-y-auto">
               <Suspense fallback={<Skeleton />}>
                 <ProjectCards />
               </Suspense>
-            </div>
+            </div> */}
           </div>
           <div className="flex flex-col gap-5">
             <div className="text-[20px] leading-[30px] font-bold">
@@ -69,7 +67,7 @@ const page = () => {
             </div>
           </div>
         </div>
-        <div className="min-w-[420px] flex flex-col gap-5 p-4">
+        <div className="min-w-[420px] h-max flex flex-col gap-5 px-4 py-2 border-2 border-[#F3F4F6] rounded-lg">
           <div className="text-[20px] leading-[30px] font-bold text-[#323842]">
             Activity Logs
           </div>

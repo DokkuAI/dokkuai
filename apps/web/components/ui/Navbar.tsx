@@ -16,11 +16,11 @@ import { usePathname } from "next/navigation";
 export default function Navbar() {
   const path = usePathname();
   return (
-    <Breadcrumb className="font-semibold">
+    <Breadcrumb className="flex-grow">
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink className="text-xl" href="/workspace">
-            <div className="flex gap-2 items-center">
+          <BreadcrumbLink href="/workspace">
+            <div className="flex gap-2 items-center text-[16px] leading-[26px] font-normal text-black">
               <WorkspaceIcon />
               Workspace
             </div>
@@ -33,9 +33,7 @@ export default function Navbar() {
               <Slash />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbLink className="text-xl" href="/project">
-                Project
-              </BreadcrumbLink>
+              <BreadcrumbLink href="/project">Project</BreadcrumbLink>
             </BreadcrumbItem>
           </>
         ) : null}
@@ -45,8 +43,8 @@ export default function Navbar() {
               <Slash />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbLink className="text-xl" href="/reference-library">
-                <div className="flex gap-2 items-center">
+              <BreadcrumbLink href="/reference-library">
+                <div className="flex gap-2 items-center text-[16px] leading-[26px] font-normal text-black">
                   <LibraryIcon />
                   Reference Library
                 </div>
@@ -60,8 +58,8 @@ export default function Navbar() {
               <Slash />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbLink className="text-xl" href="/notes-wiki">
-                <div className="flex gap-2 items-center">
+              <BreadcrumbLink href="/notes-wiki">
+                <div className="flex gap-2 items-center text-[16px] leading-[26px] font-normal text-black">
                   <NotesIcon />
                   Notes-Wiki
                 </div>
@@ -75,8 +73,8 @@ export default function Navbar() {
               <Slash />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbLink className="text-xl" href="/editor">
-                <div className="flex gap-2 items-center">
+              <BreadcrumbLink href="/editor">
+                <div className="flex gap-2 items-center text-[16px] leading-[26px] font-normal text-black">
                   <EditIcon />
                   Editor
                 </div>

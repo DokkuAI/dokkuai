@@ -28,7 +28,7 @@ const CreateProject = () => {
     );
   }
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex justify-end items-center">
       <Dialog>
         <DialogTrigger>
           <MyButton title="Create New" svg={EditIcon} />

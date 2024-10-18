@@ -16,6 +16,11 @@ import Link from "next/link";
 import FilePin from "./FilePin";
 import { ProjectLink } from "../../ui/ProjectLink";
 import { Details } from "./FileDetails";
+import NoteIcon from "@/public/Note.svg";
+import ReadIcon from "@/public/Read.svg";
+import CommentIcon from "@/public/Comment.svg";
+import ChatIcon from "@/public/Chat.svg";
+import DownloadIcon from "@/public/Download.svg";
 
 export default function DocsRow({
   id,
@@ -42,7 +47,7 @@ export default function DocsRow({
   return (
     <TableRow className="text-[14px] leading-[22px] text-[#171A1F] font-normal">
       <TableCell>{selectTypeIcon(type)}</TableCell>
-      <TableCell className="font-bold hover:underline cursor-pointer hover:border-black border-l-2">
+      <TableCell className="font-bold hover:underline cursor-pointer">
         <FileTitle name={name} id={id} url={"library"} />
       </TableCell>
       <TableCell>{year}</TableCell>
@@ -55,16 +60,26 @@ export default function DocsRow({
           <DropdownMenuTrigger>
             <Image src={ThreeDotIcon} alt="three dot icon" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>Read</DropdownMenuItem>
-            <DropdownMenuItem>Download</DropdownMenuItem>
+          <DropdownMenuContent className="mr-8">
+            <DropdownMenuItem className="cursor-pointer">
+              <div className="flex items-center gap-2">
+                <Image src={ReadIcon} alt="chat icon" />
+                Read
+              </div>
+            </DropdownMenuItem>
+            <DropdownMenuItem className="cursor-pointer">
+              <div className="flex items-center gap-2">
+                <Image src={DownloadIcon} alt="chat icon" />
+                Download
+              </div>
+            </DropdownMenuItem>
             <DeleteFile id={id} />
-            <DropdownMenuItem className="p-0">
+            <DropdownMenuItem className="p-0 cursor-pointer">
               <Details id={id} />
             </DropdownMenuItem>
             <FilePin pinned={pinned} id={id} />
-            <DropdownMenuItem className="p-0">
-              <ProjectLink id={id} url='library'/>
+            <DropdownMenuItem className="p-0 cursor-pointer">
+              <ProjectLink id={id} url="library" />
             </DropdownMenuItem>
             <DropdownMenuItem className="p-0">
               <Link
@@ -74,7 +89,10 @@ export default function DocsRow({
                   query: { chat: true },
                 }}
               >
-                Chat with document
+                <div className="flex items-center gap-2">
+                  <Image src={ChatIcon} alt="chat icon" />
+                  Chat with document
+                </div>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="p-0">
@@ -85,7 +103,10 @@ export default function DocsRow({
                   query: { comment: true },
                 }}
               >
-                Add in comments
+                <div className="flex items-center gap-2">
+                  <Image src={CommentIcon} alt="chat icon" />
+                  Add in comments
+                </div>
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem className="p-0">
@@ -96,7 +117,10 @@ export default function DocsRow({
                   query: { note: true },
                 }}
               >
-                Write in notes
+                <div className="flex items-center gap-2">
+                  <Image src={NoteIcon} alt="chat icon" />
+                  Write in notes
+                </div>
               </Link>
             </DropdownMenuItem>
           </DropdownMenuContent>

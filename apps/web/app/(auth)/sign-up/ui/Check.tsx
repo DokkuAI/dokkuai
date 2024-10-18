@@ -1,39 +1,56 @@
 "use client";
+import clsx from "clsx";
 import { usePathname } from "next/navigation";
 
 const Check = () => {
   const path = usePathname();
   console.log(path);
   return (
-    <div className="flex my-4 justify-center">
-      <div className="flex flex-col gap-2 items-center">
+    <div className="flex flex-col my-4 items-center">
+      <div className="flex items-center">
         <input
-          className="h-5 w-5 transition-all rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-800 checked:border-slate-800 cursor-default"
+          className={clsx(
+            "h-5 w-5 transition-all rounded shadow hover:shadow-md checked:bg-slate-800 checked:border-slate-800 cursor-default",
+            {
+              "ring-black ring-2 ": path.includes("/usage"),
+            }
+          )}
           type="checkbox"
           name="team"
           checked={!path.includes("usage")}
         />
-        Usage
-      </div>
-      <BlackLine />
-      <div className="flex flex-col gap-2 items-center">
+        <BlackLine
+          value={path.includes("/details") || path.includes("/workspace")}
+        />
         <input
-          className="h-5 w-5 transition-all rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-800 checked:border-slate-800 cursor-default"
+          className={clsx(
+            "h-5 w-5 transition-all rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-800 checked:border-slate-800 cursor-default",
+            {
+              "ring-black ring-2 ": path.includes("/details"),
+            }
+          )}
           type="checkbox"
           name="team"
           checked={!(path.includes("usage") || path.includes("details"))}
         />
-        Details
-      </div>
-      <BlackLine />
-      <div className="flex flex-col gap-2 items-center">
+        <BlackLine value={path.includes("/workspace")} />
         <input
-          className="h-5 w-5 transition-all rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-800 checked:border-slate-800 cursor-default"
+          className={clsx(
+            "h-5 w-5 transition-all rounded shadow hover:shadow-md border border-slate-300 checked:bg-slate-800 checked:border-slate-800 cursor-default",
+            {
+              "ring-black ring-2 ": path.includes("/workspace "),
+            }
+          )}
           type="checkbox"
           name="team"
           checked={false}
         />
-        Workspace
+      </div>
+
+      <div className="flex gap-[80px] items-center ml-6 pt-2">
+        <div>Usage</div>
+        <div className="ml-4">Details</div>
+        <div>Workspace</div>
       </div>
     </div>
   );
@@ -41,6 +58,13 @@ const Check = () => {
 
 export default Check;
 
-function BlackLine() {
-  return <div className="border-[1px] w-[98px] h-0 border-black mt-[10px]"></div>;
+function BlackLine({ value }: { value: boolean }) {
+  return (
+    <div
+      className={clsx("border-[1px] w-[120px] h-0", {
+        "border-black": value,
+        "border-[#9095A0]": !value,
+      })}
+    ></div>
+  );
 }

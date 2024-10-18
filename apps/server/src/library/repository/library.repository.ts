@@ -16,12 +16,13 @@ export default class LibraryRepository {
     return doc;
   }
 
-  async find(query: any, offset: number): Promise<any> {
+  async find(query: any, offset: number, limit: number): Promise<any> {
     const doc = await this.model
-      .find()
-      .limit(10)
+      .find(query)
+      .limit(limit)
       .skip(offset);
     const totalFiles = await this.model.countDocuments(query);
+    console.log({ files: doc, totalFiles: totalFiles });
     return { files: doc, totalFiles: totalFiles};
   }
 

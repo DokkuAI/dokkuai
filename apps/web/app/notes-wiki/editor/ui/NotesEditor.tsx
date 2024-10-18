@@ -10,7 +10,53 @@ const NotesEditor = () => {
   const searchParams = useSearchParams();
   const [noteContent] = useState<JSONContent>({
     type: "doc",
-    content: [],
+    content: [
+      {
+        type: "heading",
+        attrs: { level: 1 },
+        content: [{ type: "text", text: "Untitled" }],
+      },
+      {
+        type: "heading",
+        attrs: { level: 3 },
+        content: [{ type: "text", text: "Empty Page" }],
+      },
+      { type: "paragraph", content: [{ type: "text", text: "Start writing" }] },
+      { type: "paragraph", content: [{ type: "text", text: "Add new:" }] },
+      {
+        type: "bulletList",
+        attrs: { tight: true },
+        content: [
+          {
+            type: "listItem",
+            content: [
+              {
+                type: "paragraph",
+                content: [{ type: "text", text: "Checklist" }],
+              },
+            ],
+          },
+          {
+            type: "listItem",
+            content: [
+              { type: "paragraph", content: [{ type: "text", text: "Code" }] },
+            ],
+          },
+          {
+            type: "listItem",
+            content: [
+              {
+                type: "paragraph",
+                content: [
+                  { type: "text", text: "Equations" },
+                  { type: "hardBreak" },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   });
   const handleNoteChange = async (content: JSONContent) => {
     // setNoteContent(content);

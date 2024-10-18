@@ -7,6 +7,7 @@ import usePagination from "@/components/ui/Pagination";
 
 function LibraryFiles() {
   const { ref, data, hasNextPage } = usePagination({
+    key: "files",
     queryFn: getFiles,
     url: "http://localhost:8080/v1/library",
   });

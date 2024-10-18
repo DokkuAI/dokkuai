@@ -26,8 +26,8 @@ export default class LibraryService {
     });
   }
 
-  async findAll(query: any, offset: number): Promise<Library[]> {
-    return await this.repository.find(query, offset);
+  async findAll(query: any, offset: number, limit): Promise<Library[]> {
+    return await this.repository.find(query, offset, limit);
   }
   async findOne(id: Types.ObjectId): Promise<Library> {
     return await this.repository.findById(id);

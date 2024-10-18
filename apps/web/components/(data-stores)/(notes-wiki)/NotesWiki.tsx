@@ -36,13 +36,7 @@ function NotesWiki() {
 
       <TabsContent
         value="allNotes"
-        className=" px-5 mt-5 max-h-[600px] overflow-y-auto"
-      >
-        <Notes />
-      </TabsContent>
-      <TabsContent
-        value="linkedDocs"
-        className=" px-5 mt-5 max-h-[600px] overflow-y-auto"
+        className=" px-10 mt-5 max-h-[600px] overflow-y-auto"
       >
         <Notes />
       </TabsContent>

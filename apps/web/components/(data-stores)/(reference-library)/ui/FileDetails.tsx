@@ -7,6 +7,7 @@ import ExportIcon from "@/public/Export.svg";
 import PenIcon from "@/public/Pen.svg";
 import AddTagIcon from "@/public/AddTag.svg";
 // import LinkTypeIcon from "@/public/LinkType.svg";
+import DetailsIcon from "@/public/Details.svg";
 import { Textarea } from "@/components/ui/textarea";
 import RemoveIcon from "@/public/Remove.svg";
 import { useSearchParams, usePathname } from "next/navigation";
@@ -226,7 +227,7 @@ const FileDetails = () => {
           />
           <div
             onClick={handleClick}
-            className="cursor-pointer h-18 text-center rounded text-white bg-black border-2 border-black hover:bg-white hover:text-black"
+            className="cursor-pointer py-2  min-w-24  text-center rounded text-white bg-black border-2 border-black hover:bg-white hover:text-black"
           >
             Save Note
           </div>
@@ -246,7 +247,10 @@ export const Details = ({ id }: { id: string }) => {
       className="w-full px-2 py-1.5"
       href={{ pathname: `${path}`, query: { showDetails: id } }}
     >
-      Details
+      <div className="flex items-center gap-2">
+        <Image src={DetailsIcon} alt="chat icon" />
+        Details
+      </div>
     </Link>
   );
 };

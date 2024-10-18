@@ -11,7 +11,6 @@ import {
 import DeleteNote from "./DeleteNote";
 import NoteTitle from "../../ui/RecordTitle";
 import NotePin from "./NotePin";
-import Link from "next/link";
 import { ProjectLink } from "../../ui/ProjectLink";
 import { FilesLink } from "./NotesLink";
 
@@ -31,7 +30,7 @@ export default function NotesRow({
       <TableCell>
         <Image src={OtherTypeIcon} alt="file icon" />
       </TableCell>
-      <TableCell className="font-bold hover:underline cursor-pointer hover:border-black border-l-2">
+      <TableCell className="font-bold hover:underline cursor-pointer">
         <NoteTitle name={name} id={id} url={"notes"} />
       </TableCell>
       <TableCell>{lastModified}</TableCell>

@@ -1,8 +1,11 @@
 "use client";
+
+import DeleteIcon from "@/public/Delete.svg";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { useAuth } from "@clerk/nextjs";
 
 import axios from "axios";
+import Image from "next/image";
 
 const DeleteRecord = ({ id }: {id: string}) => {
     const { getToken } = useAuth();
@@ -20,8 +23,11 @@ const DeleteRecord = ({ id }: {id: string}) => {
 //  );
   }
   return (
-    <DropdownMenuItem className="text-red-500" onClick={handleDelete}>
-      Delete
+    <DropdownMenuItem className="text-red-500 cursor-pointer" onClick={handleDelete}>
+      <div className="flex items-center gap-2 w-full">
+        <Image src={DeleteIcon} alt="chat icon" />
+       Delete
+      </div>
     </DropdownMenuItem>
   );
 };

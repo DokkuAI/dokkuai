@@ -26,7 +26,7 @@ export default function UtilityBar({
   setNote,
 }:stateInput) {
   return (
-    <div className="px-4 h-[56px] flex justify-center items-center gap-[20px] border-2">
+    <div className="px-4 h-[56px] flex items-center gap-[20px] border-2 w-1/2">
       <div
         className={clsx(
           "h-[36px] flex items-center px-[12px] gap-[6px] rounded cursor-pointer",
