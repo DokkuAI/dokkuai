@@ -6,7 +6,7 @@ import Hamburger from "@/app/workspace/ui/Hamburger";
 
 const page = () => {
   return (
-    <div className="flex flex-col max-h-dvh">
+    <div className="flex flex-col max-h-dvh min-h-dvh ">
       <div className="min-h-[56px] w-full flex items-center gap-4 px-[16px]` text-[#565E6C] border-2 px-4">
         <Hamburger />
         <Navbar />

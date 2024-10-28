@@ -20,6 +20,7 @@ export function ProjectLinkUnlink() {
   const [projectId, setProjectId] = useState(null);
   const path = usePathname();
   const { ref, data, hasNextPage } = usePagination({
+    key: "files",
     queryFn: getFiles,
     url: "http://localhost:8080/v1/library",
   });

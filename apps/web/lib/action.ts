@@ -22,10 +22,10 @@ export async function getFiles({
   };
 }
 
-export async function getDetails({ queryKey }: { queryKey: QueryKey }) {
+export async function getDetails({ queryKey }: { queryKey: QueryKey }): Promise<any> {
   const [, url, getToken]: any = queryKey;
   const res = await axios.get(`${url}`, {
     headers: { Authorization: `Bearer ${await getToken()}` },
   });
-  return { data: res.data };
+  return {data: res.data};
 }

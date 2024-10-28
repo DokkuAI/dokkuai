@@ -30,8 +30,9 @@ const extensions = [...defaultExtensions, slashCommand];
 interface EditorProp {
   initialValue?: JSONContent;
   onChange: (value: JSONContent) => void;
+  delay?: number;
 }
-const Editor = ({ initialValue, onChange }: EditorProp) => {
+const Editor = ({ initialValue, onChange, delay=3000 }: EditorProp) => {
   const [openNode, setOpenNode] = useState(false);
   const [openColor, setOpenColor] = useState(false);
   const [openLink, setOpenLink] = useState(false);
@@ -41,13 +42,13 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
       const json = editor.getJSON();
       onChange(json);
     },
-    3000
+    delay
   );
 
   return (
     <EditorRoot>
       <EditorContent
-        className="border p-8 rounded-xl flex-grow border-gray-800 bg-gray-200 overflow-y-auto"
+        className="border p-8 rounded-xl overflow-y-auto flex-grow"
         {...(initialValue && { initialContent: initialValue })}
         extensions={extensions}
         editorProps={{
@@ -58,7 +59,7 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
           handleDrop: (view, event, _slice, moved) =>
             handleImageDrop(view, event, moved, uploadFn),
           attributes: {
-            class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full bg-white min-h-[600px] border-2 border-black`,
+            class: `prose prose-lg dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full bg-white min-h-[300px]`,
           },
         }}
         onUpdate={({ editor }) => {

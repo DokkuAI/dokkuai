@@ -9,7 +9,7 @@ import RemoveIcon from "@/public/Remove.svg";
 
 import { useSearchParams, usePathname } from "next/navigation";
 import { Fragment, useState } from "react";
-import clsx from "clsx";
+import { clsx } from "clsx";
 
 export function FilesLinkUnlink() {
   const searchParams = useSearchParams();
@@ -19,6 +19,7 @@ export function FilesLinkUnlink() {
   const [file, setFile] = useState({id: null, name: null});
   const path = usePathname();
   const { ref, data, hasNextPage } = usePagination({
+    key: "files",
     queryFn: getFiles,
     url: "http://localhost:8080/v1/library",
   });
