@@ -3,5 +3,16 @@
     {
       "mode": "auto"
     }
-  ]
+  ],
+
+  "files.eol": "\n",
+  "cSpell.words": [],
+  "editor.formatOnSave": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "editor.codeActionsOnSave": {
+    "source.addMissingImports.ts": "always",
+    "source.fixAll": "explicit",
+    "source.organizeImports": "always"
+  }
 }

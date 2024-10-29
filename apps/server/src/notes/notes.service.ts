@@ -31,10 +31,10 @@ export default class NoteService {
 
   async findOne(id: Types.ObjectId): Promise<any> {
     // 1. fetch doc from db
-    const doc = await this.repository.findById(id);
+    const doc: any = await this.repository.findById(id);
     if (doc) {
       // 2. fetch content from s3
-      const key = doc.path;
+      const key = doc.path + '/' + doc._id;
       const file = await this.fileService.getFile(key);
       return file;
     }
