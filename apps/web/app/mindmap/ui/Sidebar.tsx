@@ -1,13 +1,14 @@
 "use client";
+import axios from "axios";
 import { useDnD } from "./DnDContext";
 
-export default () => {
+export default ({handleClick}: any) => {
   const onDragStart = (event: any) => {
     event.dataTransfer.effectAllowed = "move";
   };
   const [type, setType] = useDnD();
   return (
-    <aside>
+    <aside className="flex flex-col">
       <div className="description">
         You can drag the nodes to the pane on the right.
       </div>
@@ -45,6 +46,13 @@ export default () => {
         Bi-directional Node
       </div>
       <hr />
+      <div className="flex-grow flex flex-col justify-end"><div
+        onClick={handleClick}
+        className="bg-black text-white border-2 border-black hover:bg-white hover:text-black p-2 text-center rounded"
+      >
+        Save Mindmap to Cloud
+      </div></div>
+      
     </aside>
   );
 };

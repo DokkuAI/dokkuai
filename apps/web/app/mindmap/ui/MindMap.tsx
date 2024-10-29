@@ -1,26 +1,28 @@
 "use client";
 
-import React, { useCallback, useRef, useState } from "react";
+import { useAuth } from "@clerk/nextjs";
 import {
-  ReactFlow,
-  MiniMap,
-  Controls,
-  Background,
-  useNodesState,
-  useEdgesState,
-  useReactFlow,
-  MarkerType,
   addEdge,
+  Background,
+  Controls,
+  MarkerType,
+  MiniMap,
   Panel,
+  ReactFlow,
+  useEdgesState,
+  useNodesState,
+  useReactFlow,
 } from "@xyflow/react";
-import ".././index.css";
 import "@xyflow/react/dist/style.css";
-import FloatingEdge from "./FloatingEdge";
-import FloatingConnectionLine from "./FloatingConnectionLine";
+import axios from "axios";
+import { useCallback, useEffect, useRef, useState } from "react";
+import ".././index.css";
 import CustomNode from "./CustomNode";
-import useDeleteBinding from "./useDeleteBinding";
-import Sidebar from "./Sidebar";
 import { useDnD } from "./DnDContext";
+import FloatingConnectionLine from "./FloatingConnectionLine";
+import FloatingEdge from "./FloatingEdge";
+import Sidebar from "./Sidebar";
+import useDeleteBinding from "./useDeleteBinding";
 
 const flowKey: string = "example-flow";
 const initialNodes: any = [];
@@ -32,14 +34,31 @@ const edgeTypes = {
 };
 const nodeOrigin: [number, number] = [0.5, 0];
 export default function MindMap() {
+  const { getToken } = useAuth();
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-   const [rfInstance, setRfInstance] = useState(null);
-   const { setViewport } = useReactFlow();
+  const [rfInstance, setRfInstance] = useState(null);
+  const { setViewport } = useReactFlow();
   const { screenToFlowPosition } = useReactFlow();
   const [type] = useDnD();
   useDeleteBinding();
+
+  useEffect(() => {
+    async function getMindmap() {
+      const res = await axios.get(
+        "http://localhost:8080/v1/mindmap/6720b582e704b8e89efcb7ca",
+        { headers: { Authorization: `Bearer ${await getToken()}` } }
+      );
+      localStorage.setItem(flowKey, JSON.stringify(res.data));
+      onRestore();
+    }
+    getMindmap();
+    const id = setInterval(onSave, 3000);
+    return () => {
+      clearInterval(id);
+    };
+  }, []);
 
   const onConnect = useCallback(
     (params: any) => {
@@ -159,27 +178,28 @@ export default function MindMap() {
     [screenToFlowPosition]
   );
 
-   const onSave = useCallback(() => {
-     if (rfInstance) {
-       const flow = rfInstance.toObject();
-       localStorage.setItem(flowKey, JSON.stringify(flow));
-     }
-   }, [rfInstance]);
+  const onSave = useCallback(() => {
+    console.log("called");
+    if (rfInstance) {
+      const flow = rfInstance.toObject();
+      localStorage.setItem(flowKey, JSON.stringify(flow));
+    }
+  }, [rfInstance]);
 
-   const onRestore = useCallback(() => {
-     const restoreFlow = async () => {
-       const flow = JSON.parse(localStorage.getItem(flowKey));
+  const onRestore = useCallback(() => {
+    const restoreFlow = async () => {
+      const flow = JSON.parse(localStorage.getItem(flowKey));
 
-       if (flow) {
-         const { x = 0, y = 0, zoom = 1 } = flow.viewport;
-         setNodes(flow.nodes || []);
-         setEdges(flow.edges || []);
-         setViewport({ x, y, zoom });
-       }
-     };
+      if (flow) {
+        const { x = 0, y = 0, zoom = 1 } = flow.viewport;
+        setNodes(flow.nodes || []);
+        setEdges(flow.edges || []);
+        setViewport({ x, y, zoom });
+      }
+    };
 
-     restoreFlow();
-   }, [setNodes, setViewport]);
+    restoreFlow();
+  }, [setNodes, setViewport]);
 
   return (
     <div className="dndflow">
@@ -207,23 +227,18 @@ export default function MindMap() {
           <Controls />
           <MiniMap />
           <Background gap={24} size={2} />
-          <Panel position="top-right">
-            <button
-              className="p-2 border-2 bg-white text-black"
-              onClick={onSave}
-            >
-              save
-            </button>
-            <button
-              onClick={onRestore}
-              className="p-2 border-2 bg-white text-black"
-            >
-              restore
-            </button>
-          </Panel>
         </ReactFlow>
       </div>
-      <Sidebar />
+      <Sidebar
+        handleClick={async () => {
+          onSave();
+          await axios.put(
+            "http://localhost:8080/v1/mindmap/6720b582e704b8e89efcb7ca",
+            { content: localStorage.getItem(flowKey) },
+            { headers: { Authorization: `Bearer ${await getToken()}` } }
+          );
+        }}
+      />
     </div>
   );
 }

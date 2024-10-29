@@ -14,7 +14,7 @@ const avatarUrls = [
 ];
 const Navbar = () => {
   return (
-    <div className="flex pl-4 pr-10 sm:pr-20 items-center justify-between h-[56px] shadow">
+    <div className="flex px-4 items-center justify-between h-[56px] shadow">
       <div className="flex gap-9">
         <Hamburger />
         <div className="flex h-[35px] px-3 items-center gap-2 border-2 border-[#BCC1CA] rounded">
