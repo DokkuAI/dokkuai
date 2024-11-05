@@ -13,7 +13,7 @@ export class MindmapController {
     return this.mindmapService.create(
       createMindmapDto,
       request.user._id,
-      request.user.firstName,
+      request.user.workspaceId
     );
   }
 
@@ -28,8 +28,8 @@ export class MindmapController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMindmapDto: UpdateMindmapDto) {
-    return this.mindmapService.update(+id, updateMindmapDto);
+  update(@Param('id') id: Types.ObjectId, @Body() updateMindmapDto: UpdateMindmapDto) {
+    return this.mindmapService.update(id, updateMindmapDto);
   }
 
   @Put(':id')
@@ -41,7 +41,8 @@ export class MindmapController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.mindmapService.remove(+id);
+  remove(@Param('id') id: Types.ObjectId) {
+    return this.mindmapService.remove(id);
   }
 }
+  

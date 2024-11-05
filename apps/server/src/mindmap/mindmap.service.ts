@@ -1,35 +1,43 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { Types } from 'mongoose';
+import FileService from 'src/utils/files/file.service';
+import { LoggerService } from 'src/utils/helper/logger.service';
+import { Readable } from 'stream';
 import { CreateMindmapDto } from './dto/create-mindmap.dto';
 import { UpdateMindmapDto } from './dto/update-mindmap.dto';
 import { MindmapRepository } from './repository/mindmap.repository';
 import Mindmap from './schema/mindmap.schema';
-import { Types } from 'mongoose';
-import FileService from 'src/utils/files/file.service';
-import { Readable } from 'stream';
 
 @Injectable()
 export class MindmapService {
   constructor(
     private readonly repository: MindmapRepository,
     private readonly fileService: FileService,
+    private readonly logger: LoggerService,
   ) {}
   async create(
     createMindmapDto: CreateMindmapDto,
-    id: Types.ObjectId,
-    name: string,
+    userId: Types.ObjectId,
+    workspaceId: Types.ObjectId,
   ): Promise<Mindmap> {
-    const doc: any = await this.repository.create({
-      ...createMindmapDto,
-      userId: id,
-      name,
-      path: 'temp'
-    });
-    await this.upload({
-      content: createMindmapDto.content,
-      path: doc.path,
-      name: doc._id,
-    });
-    return doc;
+    try {
+      const doc: any = await this.repository.create({
+        ...createMindmapDto,
+        userId: userId,
+        workspaceId,
+        path: `${workspaceId}/mindmaps`,
+      });
+      await this.upload({
+        content: createMindmapDto.content,
+        path: doc.path,
+        name: doc._id,
+      });
+      await this.repository.findByIdAndUpdate(doc._id, {path: `${doc.path}/${doc._id}`})
+      return doc;
+    } catch (error) {
+      this.logger.error('Error creating Mindmap', error);
+      throw new Error();
+    }
   }
 
   findAll() {
@@ -37,7 +45,7 @@ export class MindmapService {
   }
 
   async findOne(id: string): Promise<any> {
-    if (id) {
+    try {
       const key = `temp/${id}`;
       const response = await this.fileService.getFile(key);
 
@@ -55,38 +63,65 @@ export class MindmapService {
 
       const data = await streamToString(response.Body as Readable);
       return JSON.parse(data);
+    } catch (error) {
+      this.logger.error('Error fetching mindmap from bucket', error);
+      throw new Error();
     }
-    throw new NotFoundException();
   }
 
-  update(id: number, updateMindmapDto: UpdateMindmapDto) {
-    return `This action updates a #${id} mindmap`;
+  async update(id: Types.ObjectId, updateMindmapDto: UpdateMindmapDto): Promise<Mindmap> {
+    try {
+      return await this.repository.findByIdAndUpdate(id, updateMindmapDto);
+    }
+    catch(error) {
+      this.logger.error('Error updating mindmap from db', error);
+      throw new Error();
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} mindmap`;
+  async remove(id: Types.ObjectId): Promise<void> {
+    try {
+      const doc = await this.repository.findById(id);
+      const key = doc.path;
+      const res = await this.fileService.delete(key);
+      await this.repository.findByIdAndDelete(id);
+      return;
+    } catch (error) {
+      this.logger.error('Error deleting mindmap', error);
+      throw new Error();
+    }
   }
 
   async saveMindmap(
     saveMindmap: CreateMindmapDto,
     id: Types.ObjectId,
-  ): Promise<string> {
-    const doc: any = await this.repository.findById(id);
-    const mindmapData = {
-      name: doc._id,
-      content: saveMindmap.content,
-      path: 'temp', //path -> userId/notes/file_name.json
-    };
-    await this.upload(mindmapData);
-    return;
+  ): Promise<void> {
+    try {
+      const doc: any = await this.repository.findById(id);
+      const mindmapData = {
+        name: doc._id,
+        content: saveMindmap.content,
+        path: 'temp',
+      };
+      await this.upload(mindmapData);
+      return;
+    } catch (error) {
+      this.logger.error('Error updating mindmap in bucket', error);
+      throw new Error();
+    }
   }
 
   async upload(mindmap: { name: string; content: string; path: string }) {
-    const mindmapPayload = {
-      name: mindmap?.name ?? new Types.ObjectId().toString(),
-      type: 'json',
-      content: Buffer.from(mindmap.content, 'utf-8'),
-    };
-    return await this.fileService.uploadJSON(mindmapPayload, mindmap.path);
+    try {
+      const mindmapPayload = {
+        name: mindmap?.name ?? new Types.ObjectId().toString(),
+        type: 'json',
+        content: Buffer.from(mindmap.content, 'utf-8'),
+      };
+      return await this.fileService.uploadJSON(mindmapPayload, mindmap.path);
+    } catch (error) {
+      this.logger.error('Error uploading mindmap to bucket', error);
+      throw new Error();
+    }
   }
 }

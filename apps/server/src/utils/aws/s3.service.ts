@@ -104,10 +104,9 @@ export class S3Service {
 
       const command = new GetObjectCommand(input);
       const response = await this.s3Client.send(command);
-
-      this.logger.log('Successfully fetched file', 'S3Service.getObject', {
-        response,
-      });
+      // this.logger.log('Successfully fetched file', 'S3Service.getObject', {
+      //   response,
+      // });
       return response;
     } catch (error) {
       this.logger.error(
