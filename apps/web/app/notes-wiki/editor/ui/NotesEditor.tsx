@@ -69,9 +69,12 @@ const NotesEditor = () => {
   useEffect(() => {
     getNoteContent();
     async function getNoteContent() {
-      const res = await axios.get("http://localhost:8080/v1/project", {
-        headers: { Authorization: `Bearer ${await getToken()}` },
-      });
+      const res = await axios.get(
+        `http://localhost:8080/v1/notes/${searchParams.get('id')}`,
+        {
+          headers: { Authorization: `Bearer ${await getToken()}` },
+        }
+      );
       setNoteContent(JSON.parse(res.data.content));
     }
   }, []);
