@@ -15,6 +15,10 @@ export class MindmapRepository {
     return await this.model.create(mindmap);
   }
 
+  async find(query): Promise<Mindmap[]> {
+    return await this.model.find(query);
+  }
+
   async findById(id: Types.ObjectId): Promise<Mindmap> {
     return await this.model.findById(id).lean();
   }

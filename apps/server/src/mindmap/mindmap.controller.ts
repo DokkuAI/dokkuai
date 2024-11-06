@@ -18,12 +18,12 @@ export class MindmapController {
   }
 
   @Get()
-  findAll() {
-    return this.mindmapService.findAll();
+  findAll(@Req() request: any) {
+    return this.mindmapService.findAll({workspaceId: request.user.workspaceId});
   }
   
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: Types.ObjectId) {
     return this.mindmapService.findOne(id);
   }
 
