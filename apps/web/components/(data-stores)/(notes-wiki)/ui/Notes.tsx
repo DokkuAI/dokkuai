@@ -1,4 +1,4 @@
-import { Table, TableBody, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableHeader, TableRow } from "@/components/ui/table";
 import HeadCell from "../../ui/HeadCell";
 import NotesFiles from "./NotesFiles";
 import { Suspense } from "react";

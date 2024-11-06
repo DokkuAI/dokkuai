@@ -60,7 +60,7 @@ export default function Page() {
           order={1}
         >
           <Suspense>
-            <FileView id={""} />
+            <FileView />
           </Suspense>
         </ResizablePanel>
         {comment ? (

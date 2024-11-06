@@ -1,8 +1,3 @@
-import SideSectionIcon from "@/public/SideSectionIcon.svg";
-import SearchIcon from "@/public/SearchIcon.svg";
-import ZoomInIcon from "@/public/ZoomInIcon.svg";
-import ZoomOutIcon from "@/public/ZoomOutIcon.svg";
-import ThreeDotsIcon from "@/public/ThreeDotsIcon.svg";
 import HamburgerIcon from "@/public/Hamburger.svg";
 
 import {

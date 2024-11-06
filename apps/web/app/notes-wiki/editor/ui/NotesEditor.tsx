@@ -4,11 +4,13 @@ import { JSONContent } from "novel";
 import Editor from "@/components/(editor)/Editor";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuth } from "@clerk/nextjs";
 import { useSearchParams } from "next/navigation";
 
 const NotesEditor = () => {
   const searchParams = useSearchParams();
-  const [noteContent] = useState<JSONContent>({
+  const {getToken} = useAuth();
+  const [noteContent, setNoteContent] = useState<JSONContent>({
     type: "doc",
     content: [
       {
@@ -64,13 +66,15 @@ const NotesEditor = () => {
       content: JSON.stringify(content),
     });
   };
-  // useEffect(() => {
-  //   getNoteContent();
-  //   async function getNoteContent() {
-  //     const res = await axios.get("");
-  //     setNoteContent(JSON.parse(res.data.content));
-  //   }
-  // }, []);
+  useEffect(() => {
+    getNoteContent();
+    async function getNoteContent() {
+      const res = await axios.get("http://localhost:8080/v1/project", {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+      setNoteContent(JSON.parse(res.data.content));
+    }
+  }, []);
   return (
     <div className="flex flex-col border w-full min-h-dvh rounded-md">
       <div className="font-bold text-2xl text-center w-full">Notes Editor</div>

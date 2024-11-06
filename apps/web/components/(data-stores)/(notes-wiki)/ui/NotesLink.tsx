@@ -19,6 +19,7 @@ export function FilesLinkUnlink() {
   const [file, setFile] = useState({id: null, name: null});
   const path = usePathname();
   const { ref, data, hasNextPage } = usePagination({
+    key:'notes',
     queryFn: getFiles,
     url: "http://localhost:8080/v1/library",
   });
