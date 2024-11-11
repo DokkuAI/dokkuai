@@ -14,6 +14,4 @@ export class CreateProjectDto implements IProject {
   @IsOptional()
   tags?: string[];
 
-  @IsMongoId()
-  projectId: Types.ObjectId;
 }

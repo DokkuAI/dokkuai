@@ -12,7 +12,6 @@ export default class ProjectRepository {
   ) {}
 
   async create(project: Project): Promise<Project> {
-    console.log(project);
     const doc = await this.model.create(project);
     return doc;
   }
