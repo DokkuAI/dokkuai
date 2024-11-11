@@ -11,8 +11,8 @@ export default class WorkspaceService {
   constructor(private readonly repository: WorkspaceRepository, private readonly userService: UserService) {}
 
   async create(createWorkspaceDto: CreateWorkspaceDto, userId: Types.ObjectId): Promise<Workspace> {
-    const doc:any = this.repository.create({...createWorkspaceDto, userId: userId});
-    this.userService.update(userId, {workspaceId: doc._id});
+    const doc:any = await this.repository.create({...createWorkspaceDto, userId: userId});
+    await this.userService.update(userId, {workspaceId: doc._id});
     return doc;
   }
 

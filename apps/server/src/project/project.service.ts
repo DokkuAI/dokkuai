@@ -20,8 +20,8 @@ export class ProjectService {
     });
   }
 
-  async findAll(projectId: Types.ObjectId): Promise<Project[]> {
-    return await this.repository.find({ projectId: projectId });
+  async findAll(userId: Types.ObjectId): Promise<Project[]> {
+    return await this.repository.find({ userId: userId });
   }
 
   async findOne(id: string): Promise<Project> {

@@ -23,12 +23,12 @@ export default class WorkspaceController {
     return this.workspaceService.find(id);
   }
 
-  @Patch(':id')
+  @Patch()
   update(
-    @Param('id') id: string,
+    @Req() request: any,
     @Body() updateWorkspaceDto: UpdateWorkspaceDto,
   ): Promise<Workspace> {
-    return this.workspaceService.update(id, updateWorkspaceDto);
+    return this.workspaceService.update(request.user.workspaceId, updateWorkspaceDto);
   }
 
   @Delete(':id')

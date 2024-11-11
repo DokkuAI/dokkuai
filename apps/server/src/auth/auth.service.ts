@@ -55,7 +55,7 @@ export default class AuthService {
       firstName: data.first_name,
       lastName: data.last_name,
       email: data.email_addresses[0].email_address,
-      workspaceId: null
+      workspaceId: null,
     };
     await this.userService.create(userPayload);
 

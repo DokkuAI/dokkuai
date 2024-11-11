@@ -100,7 +100,6 @@ const Details = () => {
           <select
             defaultValue="default"
             name="size"
-            
             className="  pl-[12px] h-[35px] w-[285px] mb:w-[379px] rounded border-2 border-[#BCC1CA]"
           >
             <option value="default" disabled hidden>
@@ -117,7 +116,7 @@ const Details = () => {
           </select>
         </div>
         <div className="flex flex-col items-start gap-[5px]">
-          <Title title="What's the size of your company?" />
+          <Title title="How would you use DokkuAI?" />
           <input
             name="description"
             className="py-[6px] pl-[12px] h-[35px] w-[285px] mb:w-[379px] rounded border-2 border-[#BCC1CA]"

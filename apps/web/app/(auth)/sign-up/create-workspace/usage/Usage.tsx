@@ -18,7 +18,7 @@ export default function Usage() {
     if (solo || team) {
       const workspaceType = {type : solo?"personal":"team"};
       const res = await axios.post("http://localhost:8080/v1/workspace", workspaceType, {headers: {Authorization: `Bearer ${await getToken()}`}});
-      if(res.status === 200){
+      if(res.status === 201){
         router.push("/sign-up/create-workspace/details");
       }
     } else {
