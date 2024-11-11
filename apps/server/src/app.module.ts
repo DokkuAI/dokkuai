@@ -14,6 +14,7 @@ import ValidateGuard from './guard/validate.guard';
 import { APP_GUARD } from '@nestjs/core';
 import { ActivityModule } from './activity/activity.module';
 import { ProjectModule } from './project/project.module';
+import { MindmapModule } from './mindmap/mindmap.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -36,6 +37,7 @@ import { ProjectModule } from './project/project.module';
     UtilsModule,
     ActivityModule,
     ProjectModule,
+    MindmapModule,
   ],
   controllers: [AppController],
   providers: [AppService, {provide: APP_GUARD, useClass: ValidateGuard}],

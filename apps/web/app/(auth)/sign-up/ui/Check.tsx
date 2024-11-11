@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 
 const Check = () => {
   const path = usePathname();
-  console.log(path);
+ 
   return (
     <div className="flex flex-col my-4 items-center">
       <div className="flex items-center">

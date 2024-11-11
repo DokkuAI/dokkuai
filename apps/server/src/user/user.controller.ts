@@ -6,12 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import UserService from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import User from './schema/user.schema';
 import { Types } from 'mongoose';
+import { Public } from 'src/decorators/isPublic.decorator';
 
 @Controller('user')
 export default class UserController {
@@ -32,13 +34,12 @@ export default class UserController {
     return this.userService.find(id);
   }
 
-  @Patch(':id')
+  @Patch()
   update(
-    @Param('id') id: Types.ObjectId
-    ,
+    @Req() request: any,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
-    return this.userService.update(id, updateUserDto);
+    return this.userService.update(request.user._id, updateUserDto);
   }
 
   @Delete(':id')

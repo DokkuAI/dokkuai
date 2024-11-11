@@ -17,9 +17,9 @@ export class ProjectController {
     );
   }
 
-  @Get(':id')
-  findAll(@Param('id') projectId: Types.ObjectId) {
-    return this.projectService.findAll(projectId);
+  @Get()
+  findAll(@Req() request: any) {
+    return this.projectService.findAll(request.user._id);
   }
 
   @Get('find/:id')

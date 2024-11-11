@@ -74,8 +74,9 @@ export default class User implements IUser {
   @Prop({ type: AboutUser })
   about?: AboutUser;
 
-  @Prop({ required: true, ref: 'Workspace', type: [SchemaTypes.ObjectId] })
+  @Prop({ ref: 'Workspace', type: SchemaTypes.ObjectId })
   workspaceId: Types.ObjectId;
+
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

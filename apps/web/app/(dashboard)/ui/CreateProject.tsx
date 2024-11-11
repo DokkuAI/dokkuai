@@ -23,7 +23,7 @@ const CreateProject = () => {
     const token = await getToken();
     await axios.post(
       "http://localhost:8080/v1/project",
-      { title: title },
+      { title: title, favourite: false },
       { headers: { Authorization: `Bearer ${token}` } }
     );
   }

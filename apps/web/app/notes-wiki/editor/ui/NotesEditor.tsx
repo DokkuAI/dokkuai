@@ -2,7 +2,7 @@
 
 import { JSONContent } from "novel";
 import Editor from "@/components/(editor)/Editor";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useAuth } from "@clerk/nextjs";
 import { useSearchParams } from "next/navigation";
@@ -21,10 +21,10 @@ const NotesEditor = () => {
       {
         type: "heading",
         attrs: { level: 3 },
-        content: [{ type: "text", text: "Empty Page" }],
+        content: [{ type: "text", text: " Empty Page" }],
       },
-      { type: "paragraph", content: [{ type: "text", text: "Start writing" }] },
-      { type: "paragraph", content: [{ type: "text", text: "Add new:" }] },
+      { type: "paragraph", content: [{ type: "text", text: " Start writing" }] },
+      { type: "paragraph", content: [{ type: "text", text: " Add new:" }] },
       {
         type: "bulletList",
         attrs: { tight: true },
@@ -79,8 +79,7 @@ const NotesEditor = () => {
     }
   }, []);
   return (
-    <div className="flex flex-col border w-full min-h-dvh rounded-md">
-      <div className="font-bold text-2xl text-center w-full">Notes Editor</div>
+    <div className="flex flex-col border w-full flex-grow rounded-md overflow-y-auto">
       <Editor initialValue={noteContent} onChange={handleNoteChange} />
     </div>
   );

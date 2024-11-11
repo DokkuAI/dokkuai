@@ -9,17 +9,17 @@ import RemoveIcon from "@/public/Remove.svg";
 
 import { useSearchParams, usePathname } from "next/navigation";
 import { Fragment, useState } from "react";
-import clsx from "clsx";
+import { clsx } from "clsx";
 
 export function FilesLinkUnlink() {
   const searchParams = useSearchParams();
   const id = searchParams.get("showFiles");
   const [link, setLink] = useState(false);
   const [unlink, setUnlink] = useState(false);
-  const [file, setFile] = useState({id: null, name: null});
+  const [file, setFile] = useState({ id: null, name: null });
   const path = usePathname();
   const { ref, data, hasNextPage } = usePagination({
-    key:'notes',
+    key: "notes",
     queryFn: getFiles,
     url: "http://localhost:8080/v1/library",
   });
@@ -27,7 +27,7 @@ export function FilesLinkUnlink() {
   async function handleClick() {
     await axios.patch(`http://localhost:8080/v1/notes/${id}`, {
       fileId: file.id,
-      linkTo: file.name
+      linkTo: file.name,
     });
   }
 
@@ -50,7 +50,7 @@ export function FilesLinkUnlink() {
               onChange={(e) => {
                 setLink(false);
                 setUnlink(e.target.checked);
-                setFile({id: null, name: null});
+                setFile({ id: null, name: null });
               }}
             />
           </div>
@@ -83,7 +83,7 @@ export function FilesLinkUnlink() {
                             }
                           )}
                           onClick={() => {
-                            setFile({id: data._id, name: data.name});
+                            setFile({ id: data._id, name: data.name });
                           }}
                         >
                           {data.name}
@@ -112,12 +112,12 @@ export function FilesLinkUnlink() {
   ) : null;
 }
 
-export function FilesLink({ id }: { id: string}) {
+export function FilesLink({ id }: { id: string }) {
   const path = usePathname();
   return (
     <Link
       className="w-full px-2 py-1.5"
-      href={{ pathname: `${path}`, query: { showFiles: `${id}`} }}
+      href={{ pathname: `${path}`, query: { showFiles: `${id}` } }}
     >
       Link Files
     </Link>
