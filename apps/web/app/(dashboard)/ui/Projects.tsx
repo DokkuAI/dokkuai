@@ -10,20 +10,20 @@ const Projects = () => {
   const [dlt, setDlt] = useState(false);
   const { getToken } = useAuth();
 
-  // useEffect(() => {
-  //   getLibraryFiles();
-  //   async function getLibraryFiles() {
-  //     const token = await getToken();
+  useEffect(() => {
+    getLibraryFiles();
+    async function getLibraryFiles() {
+      const token = await getToken();
 
-  //     const { data } = await axios.get(
-  //       "http://localhost:8080/v1/project",
-  //       {
-  //         headers: { Authorization: `Bearer ${token}` },
-  //       }
-  //     );
-  //     setProjects(data.slice(0, 8));
-  //   }
-  // }, [dlt]);
+      const { data } = await axios.get(
+        "http://localhost:8080/v1/project",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setProjects(data.slice(0, 8));
+    }
+  }, [dlt]);
   return (
     <>
       {projects.map((project: any) => {

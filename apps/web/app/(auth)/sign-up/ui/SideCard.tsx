@@ -1,13 +1,4 @@
 import clsx from "clsx";
-;
-type cardInputs = {
-  svg: React.ReactNode;
-  path: string;
-  route: string;
-  title: string;
-  description: string;
-};
-
 
 export function SideCard({ svg, path, route, route2, route3, title, description }: any) {
   return (
