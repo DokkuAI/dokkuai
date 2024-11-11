@@ -2,8 +2,8 @@
 
 import RemoveIcon from "@/public/Remove.svg";
 import Image from "next/image";
-import CrossIcon from "@/public/Cross.svg";
-import { Progress } from "@/components/ui/progress";
+// import CrossIcon from "@/public/Cross.svg";
+// import { Progress } from "@/components/ui/progress";
 import UploadFile from "./UploadFile";
 import Link from "next/link";
 import { useSearchParams, usePathname } from "next/navigation";

@@ -20,7 +20,7 @@ export function ProjectLinkUnlink() {
   const [projectId, setProjectId] = useState(null);
   const path = usePathname();
   const { ref, data, hasNextPage } = usePagination({
-    key: "files",
+    key: "project",
     queryFn: getFiles,
     url: "http://localhost:8080/v1/library",
   });
@@ -112,7 +112,7 @@ export function ProjectLinkUnlink() {
   ) : null;
 }
 
-export function ProjectLink({ id, url }: { id: string, url: string }) {
+export function ProjectLink({ id, url }: { id: string; url: string }) {
   const path = usePathname();
   return (
     <Link
@@ -123,4 +123,3 @@ export function ProjectLink({ id, url }: { id: string, url: string }) {
     </Link>
   );
 }
-

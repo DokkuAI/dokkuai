@@ -2,11 +2,11 @@ import Image from "next/image";
 import CheckIcon from "@/public/CheckIcon.svg";
 import CrossIcon from "@/public/CrossIcon.svg"
 import Reply from "./Reply";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 const Comment = ({ comment: { content, name, src, role, time, replies } }: any) => {
 
-    const [reply, setReply] = useState(replies);
+    // const [reply, setReply] = useState(replies);
     const replyContainer = useRef(null);
   return (
     <div className="flex gap-2 w-full">

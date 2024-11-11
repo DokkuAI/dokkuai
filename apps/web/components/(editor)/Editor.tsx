@@ -29,6 +29,7 @@ const extensions = [...defaultExtensions, slashCommand];
 
 interface EditorProp {
   initialValue?: JSONContent;
+  // eslint-disable-next-line no-unused-vars
   onChange: (value: JSONContent) => void;
   delay?: number;
 }

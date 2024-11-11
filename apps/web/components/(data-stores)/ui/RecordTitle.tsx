@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+// import axios from "axios";
 
 
 const RecordTitle = ({name, id, url}: {name: string, id: string, url: string}) => {
