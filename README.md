@@ -1,16 +1,33 @@
-# Turborepo starter
+<p align="center">
+  <a href="https://www.twenty.com">
+    <img src="./packages/twenty-website/public/images/core/logo.svg" width="100px" alt="Twenty logo" />
+  </a>
+</p>
 
-This is an official starter Turborepo.
+<h2 align="center" >DokkuAI </h3>
+<p align="center">An open-source document knowledge-base workspace tool</p>
 
-## Using this example
+<p align="center"><a href="https://dokkuai.com">🌐 Website</a> · <a href="https://docs.dokkuai.com">📚 Documentation</a> ·  <a href="https://slack.com"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Slack_icon_2019.svg" width="12" height="12"/> Slack</a><p>
 
-Run the following command:
 
-```sh
-npx create-turbo@latest
-```
 
-## What's inside?
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?logo=github)](http://makeapullrequest.com)
+![GitHub contributors](https://img.shields.io/github/contributors/dokkuai/dokkuai?logo=github)
+
+
+
+
+## Why DokkuAI?
+
+- **Versatile Document Knowledge-Base Tool**: Designed to enhance collaboration, organize knowledge, and streamline workflows for researchers, engineers, managers, and any other individuals.
+
+- **Addressing Key Challenges**: DokkuAI addresses critical pain points such as information overload, disorganized references and documents, navigating and interacting with lengthy documents for deep understanding, time-consuming annotation and review process, and fragmented workflows by integrating advanced AI capabilities with intuitive organizational tools.
+
+- **AI-Driven Capabilities**:  It offers features like conversational interaction with documents (links, pdfs, books, and other docs) with multiple LLMs models, comprehensive document management database, advanced annotation tools, seamless integrations, and concept map generations, all within an unified environment.
+
+- **All-in-One Workspace**: A unified environment that boosts productivity, fosters innovation, and supports efficient collaboration.
+
+## Quickstart
 
 This Turborepo includes the following packages/apps:
 
@@ -69,13 +86,36 @@ Next, you can link your Turborepo to your Remote Cache by running the following 
 npx turbo link
 ```
 
-## Useful Links
+## Contributing
 
-Learn more about the power of Turborepo:
+All code contributions, including those of people having commit access, must go through a pull request and be approved by a core developer before being merged. This is to ensure a proper review of all the code. 
 
-- [Tasks](https://turbo.build/repo/docs/core-concepts/monorepos/running-tasks)
-- [Caching](https://turbo.build/repo/docs/core-concepts/caching)
-- [Remote Caching](https://turbo.build/repo/docs/core-concepts/remote-caching)
-- [Filtering](https://turbo.build/repo/docs/core-concepts/monorepos/filtering)
-- [Configuration Options](https://turbo.build/repo/docs/reference/configuration)
-- [CLI Usage](https://turbo.build/repo/docs/reference/command-line-reference)
+We truly ❤️ pull requests! If you wish to help, you can learn more about how you can contribute to this project in the [contribution guide](https://dokkuai.gitbook.io/dokkuai-docs/about/contributing).
+
+
+
+#### License
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version. Please see the [LICENSE](./LICENSE.md) file in our repository for
+the full text.
+
+Like many open source projects, we require that contributors provide us with a
+Contributor License Agreement (CLA). By submitting code to the Forem project,
+you are granting us a right to use that code under the terms of the CLA.
+
+Our version of the CLA was adapted from the Microsoft Contributor License
+Agreement, which they generously made available to the public domain under
+Creative Commons CC0 1.0 Universal.
+
+Any questions, please email to support@dokkuai.com.
+
+<br>
+
+<p align="center">
+  <img alt="Sloan, the sloth mascot" width="250px" src="https://thepracticaldev.s3.amazonaws.com/uploads/user/profile_image/31047/af153cd6-9994-4a68-83f4-8ddf3e13f0bf.jpg">
+  <br>
+  <strong>Happy Coding</strong> ❤️
+</p>
