@@ -86,6 +86,10 @@ Next, you can link your Turborepo to your Remote Cache by running the following 
 npx turbo link
 ```
 
+## Code of Conduct
+
+Please ensure that you always follow our [Code of Conduct](https://dokkuai.gitbook.io/dokkuai-docs/about/code-of-conduct). We aim to maintain a respectful and inclusive community.
+
 ## Contributing
 
 All code contributions, including those of people having commit access, must go through a pull request and be approved by a core developer before being merged. This is to ensure a proper review of all the code. 
@@ -94,7 +98,7 @@ We truly ❤️ pull requests! If you wish to help, you can learn more about how
 
 
 
-#### License
+## License
 
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU Affero General Public License as published by the Free
